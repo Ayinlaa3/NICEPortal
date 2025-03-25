@@ -11,6 +11,7 @@ node_modules
 .env
 dist
 dist-ssr
+.husky
 *.local
 
 # Editor directories and files

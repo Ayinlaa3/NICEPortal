@@ -1,5 +1,7 @@
-export const App = () => {
+export function App() {
   return (
-    <div><p>Welcome to NICE~</p></div>
-  )
+    <div>
+      <p>Welcome to NICE~</p>
+    </div>
+  );
 }
