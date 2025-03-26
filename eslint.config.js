@@ -23,6 +23,9 @@ export default [
     rules: {
       "prettier/prettier": "error",
       "react/react-in-jsx-scope": "off",
+      "react/prop-types": "off", // Disable prop-types if you're using TypeScript
+      "react/jsx-uses-react": "off", // Not needed in React 17+
+      "react/jsx-uses-vars": "error", // Prevent unused variables in JSX
     },
     settings: {
       react: {
