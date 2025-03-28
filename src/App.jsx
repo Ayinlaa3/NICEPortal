@@ -1,7 +1,8 @@
+import LandingPage from "./pages/LandingPage.jsx";
 export function App() {
   return (
-    <div>
-      <p>Welcome to NICE~</p>
-    </div>
+    <main>
+      <LandingPage />
+    </main>
   );
 }
