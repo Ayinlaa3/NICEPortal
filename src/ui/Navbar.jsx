@@ -4,7 +4,7 @@ import { ArrowDown } from "./Icons";
 
 const Navbar = () => {
   return (
-    <header className="bg-[#EBFFF1]">
+    <header className="bg-(--accent)">
       <div className="h-4 bg-linear-90 from-[#FEF303] from-0% to-[#03823B] to-100%" />
       <div className="px-43 py-4 gap-20 flex items-center">
         <div className="flex items-center gap-4">
