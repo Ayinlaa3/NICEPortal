@@ -6,10 +6,10 @@ const Navbar = () => {
   return (
     <header className="bg-(--accent)">
       <div className="h-4 bg-linear-90 from-[#FEF303] from-0% to-[#03823B] to-100%" />
-      <div className="px-43 py-4 gap-20 flex items-center">
+      <div className="px-8 py-4 gap-2 flex justify-between items-center">
         <div className="flex items-center gap-4">
           <img
-            src="/images/logo.svg"
+            src="/icons/logo.svg"
             draggable="false"
             alt="NICE Logo"
             className="size-33"
@@ -20,7 +20,7 @@ const Navbar = () => {
           </h1>
         </div>
 
-        <div className="flex grow-1 flex-col">
+        <div className="flex flex-col">
           {/* row 1 */}
           <div className="flex gap-4 justify-between py-3 items-center">
             <input
@@ -48,7 +48,7 @@ const Navbar = () => {
             </a>
 
             <Popover>
-              <PopoverButton className="font-semibold text-black flex items-center gap-1 text-xl">
+              <PopoverButton className="font-semibold text-black  flex items-center gap-1 text-xl">
                 Career & Development <ArrowDown />
               </PopoverButton>
               <PopoverPanel

@@ -67,6 +67,7 @@
 
   button {
     cursor: pointer;
+    outline: none;
     transition: background-color 0.2s ease, transform 0.1s ease;
 
     &:hover {
@@ -80,3 +81,10 @@
     opacity: 0.6;
   }
 }
+
+
+/* #event-details > li{
+  list-style-image: url("/icons/clock.svg");
+  list-style-position: inside; 
+  list-style-type: none;
+} */

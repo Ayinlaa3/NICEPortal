@@ -1,6 +1,12 @@
 import clsx from "clsx";
 
-const Button = ({ type = "primary", size = "md", children, ...rest }) => {
+const Button = ({
+  type = "primary",
+  className,
+  size = "md",
+  children,
+  ...rest
+}) => {
   const buttonStyles = {
     primary: "bg-(--primary) text-white",
     secondary: "bg-[#8FE1A8] text-black",
@@ -15,7 +21,10 @@ const Button = ({ type = "primary", size = "md", children, ...rest }) => {
   };
 
   return (
-    <button className={clsx(buttonStyles[type], buttonSize[size])} {...rest}>
+    <button
+      className={clsx(buttonStyles[type], buttonSize[size], className)}
+      {...rest}
+    >
       {children}
     </button>
   );
