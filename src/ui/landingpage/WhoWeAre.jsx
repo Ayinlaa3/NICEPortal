@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import {
   Facebook,
   Instagram,
@@ -6,7 +6,7 @@ import {
   Twitter,
   Worker,
   Youtube,
-} from "./Icons";
+} from "../Icons";
 
 const WhoWeAre = () => {
   return (

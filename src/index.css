@@ -20,7 +20,7 @@
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
   --destructive-foreground: #ffffff;
-  --border: #e5e7eb;
+  --border: #FF531C;
   --input: #03823B;
   --ring: #3b82f6;
   --font-sans:  "Mulish", sans-serif;
@@ -82,6 +82,9 @@
   }
 }
 
+#quickLinks > *:not(:last-child){
+  border-right: 2px solid var(--border);
+}
 
 /* #event-details > li{
   list-style-image: url("/icons/clock.svg");

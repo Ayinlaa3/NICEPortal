@@ -1,11 +1,12 @@
-import Events from "../ui/Events.jsx";
-import Navbar from "../ui/Navbar.jsx";
-import WhoWeAre from "../ui/WhoWeAre.jsx";
+import Banner from "../ui/landingpage/Banner.jsx";
+import Events from "../ui/landingpage/Events.jsx";
+import Navbar from "../ui/landingpage/Navbar.jsx";
+import WhoWeAre from "../ui/landingpage/WhoWeAre.jsx";
 const LandingPage = () => {
   return (
     <div>
       <Navbar />
-      <div>banner here</div>
+      <Banner />
       <WhoWeAre />
       <div>Rating here</div>
       <Events />
