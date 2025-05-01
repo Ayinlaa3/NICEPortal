@@ -22,7 +22,12 @@ const Button = ({
 
   return (
     <button
-      className={clsx(buttonStyles[type], buttonSize[size], className)}
+      className={clsx(
+        buttonStyles[type],
+        buttonSize[size],
+        className,
+        "hover:shadow-lg transition-all ease-in-out active:scale-95",
+      )}
       {...rest}
     >
       {children}
