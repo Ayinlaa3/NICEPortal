@@ -1,3 +1,4 @@
+import Button from "../../components/Button";
 import EventCard from "../../components/EventCard";
 
 const Events = () => {
@@ -10,6 +11,8 @@ const Events = () => {
         <EventCard />
         <EventCard />
       </div>
+
+      <Button>View all Events</Button>
     </div>
   );
 };
