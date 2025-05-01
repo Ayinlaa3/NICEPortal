@@ -2,19 +2,23 @@ import CountUp from "react-countup";
 
 const Ratings = () => {
   return (
-    <div className="flex *:flex *:flex-col *:not-[:last-child]:border-r-2 *:border-(--muted) justify-between py-10  *:gap-2 *:items-center *:p-20 *:py-0">
+    <div className="flex *:flex *:flex-col items-center justify-between py-10  gap-4  *:gap-2 *:items-center  px-40">
       <div>
         <Rating number={7000} />
         <span>Registered members</span>
       </div>
+      <Vr />
       <div>
         <Rating number={7000} />
         <span>Nice members</span>
       </div>
+      <Vr />
       <div>
         <Rating number={500} />
         <span>Research Publications</span>
       </div>
+      <Vr />
+
       <div>
         <span className="text-4xl font-bold text-(--border)">2001</span>
         <span>Year Established</span>
@@ -37,4 +41,8 @@ const Rating = ({ number }) => {
       suffix="+"
     />
   );
+};
+
+const Vr = () => {
+  return <div className="h-10 w-[1px] bg-(--muted)" />;
 };
