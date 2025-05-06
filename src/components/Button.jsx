@@ -15,7 +15,7 @@ const Button = ({
   };
 
   const buttonSize = {
-    sm: "text-sm",
+    sm: "text-sm px-4 py-2",
     md: "text-base font-bold text-xl px-6 py-3",
     lg: "text-lg",
   };
