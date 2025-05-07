@@ -8,6 +8,7 @@ import Partnership from "../ui/landingpage/Partnership.jsx";
 import QuickLinks from "../ui/landingpage/QuickLinks.jsx";
 import Ratings from "../ui/landingpage/Ratings.jsx";
 import FeaturedSpotlights from "../ui/landingpage/Spotlight.jsx";
+import Testimonial from "../ui/landingpage/Testimonials.jsx";
 import WhoWeAre from "../ui/landingpage/WhoWeAre.jsx";
 import YoungEngineersCorner from "../ui/landingpage/YoungEngineersCorner.jsx";
 const LandingPage = () => {
@@ -25,6 +26,7 @@ const LandingPage = () => {
       <YoungEngineersCorner />
       <Advertisment />
       <FeaturedSpotlights />
+      <Testimonial />
     </div>
   );
 };
