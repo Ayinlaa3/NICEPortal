@@ -10,6 +10,7 @@ import Ratings from "../ui/landingpage/Ratings.jsx";
 import FeaturedSpotlights from "../ui/landingpage/Spotlight.jsx";
 import Testimonial from "../ui/landingpage/Testimonials.jsx";
 import WhoWeAre from "../ui/landingpage/WhoWeAre.jsx";
+import Footer from "../ui/landingpage/Footer.jsx";
 import YoungEngineersCorner from "../ui/landingpage/YoungEngineersCorner.jsx";
 const LandingPage = () => {
   return (
@@ -27,6 +28,7 @@ const LandingPage = () => {
       <Advertisment />
       <FeaturedSpotlights />
       <Testimonial />
+      <Footer />
     </div>
   );
 };
