@@ -19,8 +19,8 @@
   --accent: #EEEEF0;
   --accent-foreground: #ffffff;
   --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-  --border: #e5e7eb;
+  --destructive-foreground: #FF531C;
+  --border: #FF531C;
   --input: #03823B;
   --ring: #3b82f6;
   --font-sans:  "Mulish", sans-serif;
@@ -68,12 +68,15 @@
   button {
     cursor: pointer;
     outline: none;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    /* transition: background-color 0.2s ease, transform 0.1s ease; */
 
     &:hover {
       opacity: 0.9;
-      transform: scale(1.05);
     }
+
+    /* &:active {
+      transform: scale(0.98);
+    } */
   }
 
   button:disabled {
@@ -82,6 +85,9 @@
   }
 }
 
+#quickLinks > *:not(:last-child){
+  border-right: 2px solid var(--border);
+}
 
 /* #event-details > li{
   list-style-image: url("/icons/clock.svg");

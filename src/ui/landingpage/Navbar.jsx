@@ -1,10 +1,10 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import Button from "../components/Button";
-import { ArrowDown } from "./Icons";
+import Button from "../../components/Button";
+import { ArrowDown } from "../Icons";
 
 const Navbar = () => {
   return (
-    <header className="bg-(--accent)">
+    <header className="bg-(--accent) border-(--border) border-b-3">
       <div className="h-4 bg-linear-90 from-[#FEF303] from-0% to-[#03823B] to-100%" />
       <div className="px-8 py-4 gap-2 flex justify-between items-center">
         <div className="flex items-center gap-4">

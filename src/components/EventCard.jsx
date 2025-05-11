@@ -2,7 +2,7 @@ import { Calender, Clock, Location, StarIcon } from "../ui/Icons";
 
 const EventCard = () => {
   return (
-    <div className="bg-white ">
+    <div className="bg-white cursor-pointer hover:shadow-lg rounded-(--radius) overflow-hidden">
       <img
         src="/images/card_img.png"
         alt="Outreach"

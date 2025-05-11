@@ -1,4 +1,4 @@
-import Button from "../components/Button";
+import Button from "../../components/Button";
 import {
   Facebook,
   Instagram,
@@ -6,12 +6,12 @@ import {
   Twitter,
   Worker,
   Youtube,
-} from "./Icons";
+} from "../Icons";
 
 const WhoWeAre = () => {
   return (
     <section className="bg-(--accent) p-5 py-8">
-      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center gap-8">
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row  items-center gap-8">
         {/* section 1  */}
         <div className="lg:w-1/2">
           <h2 className="flex mb-10 items-center gap-2 text-(--primary) font-bold text-2xl">
