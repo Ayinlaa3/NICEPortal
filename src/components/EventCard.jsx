@@ -1,35 +1,30 @@
 import { Calender, Clock, Location, StarIcon } from "../ui/Icons";
+import Tag from "./Tag";
 
 const EventCard = () => {
   return (
-    <div className="bg-white cursor-pointer hover:shadow-lg rounded-(--radius) overflow-hidden">
+    <div className="bg-white cursor-pointer hover:shadow-lg rounded-xl overflow-hidden">
       <img
         src="/images/card_img.png"
         alt="Outreach"
         className="w-full object-cover object-center"
       />
-      <article className="flex flex-col gap-2 px-10 py-5">
+      <article className="flex flex-col gap-2 px-6 py-4">
         <Tag tag="Outreach" />
 
-        <h2 className="text-(--primary) font-bold text-lg leading-6">
+        <h2 className="text-[var(--primary)] font-bold text-lg leading-6">
           NICE SouthWest Regional Build-Right Workshop
         </h2>
 
-        <ul
-          className="text-md border-t mt-5 space-y-2 py-2 **:flex **:items-center **:gap-2.5"
-          id="event-details"
-        >
+        <ul className="text-md border-t mt-4 space-y-2 pt-3 **:flex **:items-center **:gap-2.5">
           <li>
-            <Location />
-            UI Conference Centre, Ibadan
+            <Location /> UI Conference Centre, Ibadan
           </li>
           <li>
-            <Calender />
-            15 March 2025
+            <Calender /> 15 March 2025
           </li>
           <li>
-            <Clock />
-            10:00 AM - 2:00 PM WAT
+            <Clock /> 10:00 AM - 2:00 PM WAT
           </li>
         </ul>
       </article>
@@ -38,14 +33,3 @@ const EventCard = () => {
 };
 
 export default EventCard;
-
-const Tag = ({ tag }) => {
-  return (
-    <div className="flex">
-      <div className="bg-(--primary) p-2">
-        <StarIcon />
-      </div>
-      <div className="p-2 bg-(--accent) font-bold text-[12px]">{tag}</div>
-    </div>
-  );
-};

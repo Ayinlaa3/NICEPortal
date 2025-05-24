@@ -1,23 +1,23 @@
+// src/components/ui/Button.jsx
 import clsx from "clsx";
 
 const Button = ({
   type = "primary",
-  className,
+  className = "",
   size = "md",
   children,
   ...rest
 }) => {
   const buttonStyles = {
-    primary: "bg-(--primary) text-white",
+    primary: "bg-[var(--primary)] text-white",
     secondary: "bg-[#8FE1A8] text-black",
-    tertiary: "bg-(--destructive-foreground) text-white",
-    // default: "bg-[#03823B] text-[#FEF303]",
+    tertiary: "bg-[var(--destructive-foreground)] text-white",
   };
 
   const buttonSize = {
     sm: "text-sm px-4 py-2",
     md: "text-base font-bold text-xl px-6 py-3",
-    lg: "text-lg",
+    lg: "text-lg px-8 py-4",
   };
 
   return (
@@ -26,7 +26,7 @@ const Button = ({
         buttonStyles[type],
         buttonSize[size],
         className,
-        "hover:shadow-lg transition-all ease-in-out active:scale-95",
+        "hover:shadow-lg transition-all ease-in-out active:scale-95 rounded-xl"
       )}
       {...rest}
     >

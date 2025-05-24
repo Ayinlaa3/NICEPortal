@@ -1,6 +1,7 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
-import Button from "../../components/Button";
+import Button from "@/components/ui/Button";
 import { ArrowDown } from "../Icons";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
@@ -30,9 +31,11 @@ const Navbar = () => {
             />
 
             <div className="flex gap-4 items-center">
-              <Button type="secondary">Login to your Portal</Button>
-              <Button>Join NICE</Button>
-            </div>
+               <Link to="/login">
+                <Button type="secondary">Login to your Portal</Button>
+                </Link>
+               <Button>Join NICE</Button>
+          </div>
           </div>
 
           {/* row 2  */}

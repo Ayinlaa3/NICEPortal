@@ -1,4 +1,4 @@
-import Button from "../../components/Button";
+import Button from "@/components/ui/Button";
 import {
   Facebook,
   Instagram,
@@ -65,7 +65,7 @@ const WhoWeAre = () => {
             className="object-cover w-full h-full rounded-(--radius)"
             draggable="false"
           />
-          <div className="py-4 px-7 flex flex-col items-center border-b border-(--primary) bg-(--secondary-foreground) w-full rounded-[20px] absolute bottom-30 left-0 2xl:left-40 z-10">
+          <div className="py-4 px-7 flex flex-col items-center border-b border-(--primary) bg-(--secondary-foreground) w-full rounded-[20px] absolute bottom-30 left-0 2xl:left-20 z-10">
             <span className="font-bold text-(--primary) text-2xl">
               Engr. Tokunbo Ajanaku, FNSE FNICE
             </span>
