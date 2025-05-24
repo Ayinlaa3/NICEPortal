@@ -14,7 +14,7 @@ const images = [
 
 const Banner = () => {
   return (
-    <div className="relative w-full px-10 py-20">
+    <div className="relative w-full px-10 py-20 container mx-auto">
       <div className="flex flex-row justify-between items-start gap-10">
         {/* Left Text Section */}
         <div className="flex flex-col gap-10 z-10 w-1/2">
@@ -53,24 +53,23 @@ const Banner = () => {
 
         {/* Slider Section */}
         <div className="relative w-[500px] h-[550px] rounded-2xl overflow-hidden ml-[-20px]">
-  <Swiper
-    modules={[Autoplay]}
-    autoplay={{ delay: 2500, disableOnInteraction: false }}
-    loop={true}
-    className="w-full h-full"
-  >
-    {images.map((src, index) => (
-      <SwiperSlide key={index}>
-        <img
-          src={src}
-          alt={`Slide ${index + 1}`}
-          className="object-cover w-full h-full"
-        />
-      </SwiperSlide>
-    ))}
-  </Swiper>
-</div>
-
+          <Swiper
+            modules={[Autoplay]}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            loop={true}
+            className="w-full h-full"
+          >
+            {images.map((src, index) => (
+              <SwiperSlide key={index}>
+                <img
+                  src={src}
+                  alt={`Slide ${index + 1}`}
+                  className="object-cover w-full h-full"
+                />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </div>
   );

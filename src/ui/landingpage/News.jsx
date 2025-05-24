@@ -33,7 +33,7 @@ const newsItems = [
 
 const NewsSection = () => {
   return (
-    <section className="py-12 mt-60 bg-white">
+    <section className="xl:py-12 xl:mt-60 bg-white">
       <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           Latest News & Blogs

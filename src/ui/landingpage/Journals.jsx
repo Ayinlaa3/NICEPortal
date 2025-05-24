@@ -14,7 +14,7 @@ const Journals = () => {
           })}
         </div>
 
-        <Button type="tertiary">View all Publications</Button>
+        <Button variant="tertiary">View all Publications</Button>
       </article>
       <div className="bg-linear-90 to-[#fef103b2] from-0% from-[#03823a] to-100% absolute inset-0" />
     </div>

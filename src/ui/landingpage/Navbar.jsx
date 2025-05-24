@@ -31,11 +31,11 @@ const Navbar = () => {
             />
 
             <div className="flex gap-4 items-center">
-               <Link to="/login">
-                <Button type="secondary">Login to your Portal</Button>
-                </Link>
-               <Button>Join NICE</Button>
-          </div>
+              <Link to="/login">
+                <Button variant="secondary">Login to your Portal</Button>
+              </Link>
+              <Button>Join NICE</Button>
+            </div>
           </div>
 
           {/* row 2  */}
