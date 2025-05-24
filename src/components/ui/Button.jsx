@@ -2,7 +2,7 @@
 import clsx from "clsx";
 
 const Button = ({
-  type = "primary",
+  variant = "primary",
   className = "",
   size = "md",
   children,
@@ -23,10 +23,10 @@ const Button = ({
   return (
     <button
       className={clsx(
-        buttonStyles[type],
+        buttonStyles[variant],
         buttonSize[size],
         className,
-        "hover:shadow-lg transition-all ease-in-out active:scale-95 rounded-xl"
+        "hover:shadow-lg transition-all ease-in-out active:scale-95 rounded-xl",
       )}
       {...rest}
     >

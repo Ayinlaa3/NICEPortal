@@ -66,8 +66,8 @@ const MembershipSummary = () => (
       <p className="font-bold">#NICE-3042</p>
     </div>
     <div className="col-span-full flex gap-4 mt-2">
-      <Button type="primary">View Details</Button>
-      <Button type="secondary">Renew Now</Button>
+      <Button variant="primary">View Details</Button>
+      <Button variant="secondary">Renew Now</Button>
     </div>
   </section>
 );

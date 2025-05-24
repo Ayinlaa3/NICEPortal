@@ -2,7 +2,7 @@ import CountUp from "react-countup";
 
 const Ratings = () => {
   return (
-    <div className="flex *:flex *:flex-col items-center justify-between py-10  gap-4  *:gap-2 *:items-center  px-40">
+    <div className="flex *:flex *:flex-col items-center justify-between py-10  gap-4  *:gap-2 *:items-center  container mx-auto px-40">
       <div>
         <Rating number={7000} />
         <span>Registered members</span>
