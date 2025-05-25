@@ -15,7 +15,7 @@ const images = [
 const Banner = () => {
   return (
     <div className="relative w-full px-10 py-20 container mx-auto">
-      <div className="flex flex-row justify-between items-start gap-10">
+      <div className="flex flex-row justify-center items-start lg:gap-20 gap-10">
         {/* Left Text Section */}
         <div className="flex flex-col gap-10 z-10 w-1/2">
           <h2 className="font-extrabold text-5xl text-[var(--primary)]">
