@@ -14,7 +14,7 @@ const images = [
 
 const Banner = () => {
   return (
-    <div className="relative w-full px-10 py-20 container mx-auto">
+    <div className="relative w-full p-5 container mx-auto">
       <div className="flex flex-row justify-center items-start lg:gap-20 gap-10">
         {/* Left Text Section */}
         <div className="flex flex-col gap-10 z-10 w-1/2">
@@ -30,7 +30,7 @@ const Banner = () => {
 
           {/* Quick Links Overlay */}
           <div
-            className="text-xl rounded-2xl font-bold flex gap-2 *:flex *:items-center *:gap-2 *:px-2 p-3 border-3 border-t-0 border-[var(--border)] bg-white/90 backdrop-blur-md w-fit shadow-lg absolute bottom-30 left-0 2xl:left-20 z-10"
+            className="text-xl rounded-2xl font-bold flex gap-2 *:flex *:items-center *:gap-2 *:px-2 px-3 py-5 border-3 border-t-0 border-[var(--border)] bg-white/90 backdrop-blur-md w-fit shadow-lg absolute bottom-20 left-0 2xl:left-20 z-10"
             id="quickLinks"
           >
             <a href="#">
@@ -52,7 +52,7 @@ const Banner = () => {
         </div>
 
         {/* Slider Section */}
-        <div className="relative w-[500px] h-[550px] rounded-2xl overflow-hidden ml-[-20px]">
+        <div className="relative w-[500px] h-[450px] rounded-2xl overflow-hidden ml-[-20px]">
           <Swiper
             modules={[Autoplay]}
             autoplay={{ delay: 2500, disableOnInteraction: false }}
