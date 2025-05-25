@@ -232,8 +232,8 @@ export const Calender = () => {
 export const Plus = () => {
   return (
     <svg
-      width="50"
-      height="50"
+      width="30"
+      height="30"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -251,8 +251,8 @@ export const Plus = () => {
 export const Search = () => {
   return (
     <svg
-      width="50"
-      height="50"
+      width="30"
+      height="30"
       viewBox="0 0 50 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -268,8 +268,8 @@ export const Search = () => {
 export const Certificate = () => {
   return (
     <svg
-      width="59"
-      height="50"
+      width="30"
+      height="30"
       viewBox="0 0 59 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -289,8 +289,8 @@ export const Certificate = () => {
 export const Partner = () => {
   return (
     <svg
-      width="63"
-      height="50"
+      width="30"
+      height="30"
       viewBox="0 0 63 50"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
@@ -313,8 +313,8 @@ export const Partner = () => {
 export const Secure = () => {
   return (
     <svg
-      width="45"
-      height="48"
+      width="30"
+      height="30"
       viewBox="0 0 45 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
