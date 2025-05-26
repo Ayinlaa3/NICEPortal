@@ -13,7 +13,7 @@ const Login = () => {
     setError(null);
 
     // Example validation; replace with real API call
-    if (email === "john.doe@example.com" && password === "password123") {
+    if (email === "aayinla@gmail.com" && password === "password123") {
       navigate("/dashboard");
     } else {
       setError("Invalid email or password.");
