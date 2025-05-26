@@ -6,19 +6,19 @@ const Testimonial = () => {
   // In a real carousel, you'd manage state for the current index
   const stories = [
     {
-      name: "Engr. John Lark Doe, FNISE FNICE",
+      name: "Engr. John Lark Doe, FNSE FNICE",
       quote:
         "Being a member of NICE has helped me improve on my professional skills and relevance in the built industry.",
       imageSrc: "/images/Ellipse.png", // Replace with actual image path
     },
     {
-      name: "Engr. John Lark Doe, FNISE FNICE",
+      name: "Engr. John Lark Doe, FNSE FNICE",
       quote:
         "Being a member of NICE has helped me improve on my professional skills and relevance in the built industry.",
       imageSrc: "/images/Ellipse.png", // Replace with actual image path
     },
     {
-      name: "Engr. John Lark Doe, FNISE FNICE",
+      name: "Engr. John Lark Doe, FNSE FNICE",
       quote:
         "Being a member of NICE has helped me improve on my professional skills and relevance in the built industry.",
       imageSrc: "/images/Ellipse.png", // Replace with actual image path
