@@ -34,7 +34,9 @@ const Navbar = () => {
               <Link to="/login">
                 <Button variant="secondary">Login to your Portal</Button>
               </Link>
+              <Link to="/signup">
               <Button>Join NICE</Button>
+              </Link>
             </div>
           </div>
 
