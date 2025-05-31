@@ -1,7 +1,6 @@
 // src/pages/public/NewRegistration.jsx
 import { useState } from "react";
 import Button from "@/components/ui/Button";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { usePaymentGateway } from "@/hooks/usePaymentGateway";
 import { useNavigate } from "react-router-dom";
@@ -67,7 +66,6 @@ const NewRegistration = () => {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
       <div className="flex items-center justify-center px-4 py-12">
         <form
           onSubmit={handleSubmit}

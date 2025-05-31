@@ -1,5 +1,4 @@
 // src/pages/member/Dashboard.jsx
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useAuth } from "@/hooks/useAuth";
 import Button from "@/components/ui/Button";
@@ -9,7 +8,6 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
 
       <section className="px-4 py-8 max-w-5xl mx-auto">
         <h1 className="text-2xl font-bold mb-2 text-[var(--primary)]">

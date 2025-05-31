@@ -11,7 +11,7 @@ const Profile = () => {
     email: user?.email || "",
     phone: "08020000000",
     name: "John Doe",
-    chapter: "Southwest",
+    chapter: "Warri Chapter",
     gender: "Male",
     birthDate: "1990-01-01",
     address: "12 Engineering Rd, Ibadan",
