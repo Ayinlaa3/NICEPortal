@@ -1,6 +1,6 @@
 import { Popover, PopoverButton, PopoverPanel } from "@headlessui/react";
 import Button from "@/components/ui/Button";
-import { ArrowDown } from "../Icons";
+import { ArrowDown } from "../ui/Icons";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {

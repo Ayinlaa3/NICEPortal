@@ -1,9 +1,13 @@
-import Navbar from "../ui/landingpage/Navbar";
+// src/pages/public/Signup.jsx
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
-import Footer from "../ui/landingpage/Footer";
+import Navbar from "@/components/Navbar"; // ✅ fixed import
+// import Footer from "@/components/Footer"; // ✅ assumed reusable
 
 const Signup = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
     regNo: "",
     email: "",
@@ -12,16 +16,33 @@ const Signup = () => {
     middleName: "",
     lastName: "",
     memberGrade: "",
+    chapter: "",
   });
+  const [error, setError] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Signup Data:", form);
-    // TODO: Send to backend or validate
+    setError(null);
+    setLoading(true);
+
+    try {
+      // TODO: Replace with actual backend check for existing registration
+      const isNew = !form.regNo.startsWith("OLD"); // simulate check
+      if (!isNew) {
+        navigate("/login"); // redirect existing users
+      } else {
+        console.log("Register new member", form);
+        navigate("/register"); // go to NewRegistration.jsx
+      }
+    } catch (err) {
+      setError("An error occurred. Try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -32,7 +53,9 @@ const Signup = () => {
           onSubmit={handleSubmit}
           className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl space-y-6"
         >
-          <h1 className="text-2xl font-bold text-center">Member Registration</h1>
+          <h1 className="text-2xl font-bold text-center">Member Signup</h1>
+
+          {error && <p className="text-red-500 text-center text-sm">{error}</p>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -123,12 +146,26 @@ const Signup = () => {
                 required
               />
             </div>
+
+            <div>
+              <label className="block text-sm font-semibold">Chapter</label>
+              <input
+                type="text"
+                name="chapter"
+                value={form.chapter}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-md"
+                required
+              />
+            </div>
           </div>
 
-          <Button type="submit" className="w-full">Register</Button>
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Processing..." : "Continue"}
+          </Button>
         </form>
       </div>
-        <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };
