@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import Navbar from "@/components/Navbar"; // ✅ fixed import
-// import Footer from "@/components/Footer"; // ✅ assumed reusable
+import Footer from "@/components/Footer"; // ✅ assumed reusable
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -165,7 +165,7 @@ const Signup = () => {
           </Button>
         </form>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

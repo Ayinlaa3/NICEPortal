@@ -3,8 +3,21 @@ import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { usePaymentGateway } from "@/hooks/usePaymentGateway";
+import { useNavigate } from "react-router-dom";
+
+const gradePricing = {
+  Student: 7500,
+  Graduate: 25000,
+  Associate: 60000,
+  Member: 40000,
+  Fellow: 480000,
+  Fellow_Invite: 830000,
+};
 
 const NewRegistration = () => {
+  const navigate = useNavigate();
+  const { initializePaystack } = usePaymentGateway();
   const [form, setForm] = useState({
     grade: "",
     fullname: "",
@@ -23,10 +36,33 @@ const NewRegistration = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("New Member Registration Data:", form);
-    // TODO: Submit to backend API with FormData
+    const amount = gradePricing[form.grade] || 0;
+
+    if (!amount) {
+      alert("Please select a valid membership grade.");
+      return;
+    }
+
+    const metadata = {
+      fullname: form.fullname,
+      grade: form.grade,
+      phone: form.phone,
+    };
+
+    initializePaystack({
+      email: form.email,
+      amount,
+      metadata,
+      onSuccess: (res) => {
+        console.log("Payment success:", res);
+        navigate("/payment-status?status=success");
+      },
+      onClose: () => {
+        navigate("/payment-status?status=cancelled");
+      },
+    });
   };
 
   return (
@@ -121,7 +157,9 @@ const NewRegistration = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full">Proceed to Payment</Button>
+          <Button type="submit" className="w-full">
+            Proceed to Payment ({gradePricing[form.grade] ? `₦${gradePricing[form.grade].toLocaleString()}` : ""})
+          </Button>
         </form>
       </div>
       <Footer />
@@ -130,5 +168,5 @@ const NewRegistration = () => {
 };
 
 export default NewRegistration;
-// Note: This component assumes you have a backend API to handle the form submission.
-// You can use FormData to send the files and other data to your backend.
+
+// This code defines a NewRegistration component that allows users to register as new members of NICE.
