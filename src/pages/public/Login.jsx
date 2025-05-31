@@ -2,9 +2,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
+import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -16,14 +18,17 @@ const Login = () => {
     setLoading(true);
 
     try {
-      // Replace with real backend call
+      let role;
       if (email === "admin@nice.org" && password === "admin123") {
-        navigate("/admin");
+        role = "admin";
       } else if (email === "member@nice.org" && password === "member123") {
-        navigate("/dashboard");
+        role = "member";
       } else {
         throw new Error("Invalid email or password.");
       }
+
+      login({ email, role });
+      navigate(role === "admin" ? "/admin" : "/dashboard");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -70,7 +75,9 @@ const Login = () => {
         </Button>
 
         <div className="text-center text-sm mt-4">
-          <a href="/signup" className="text-[var(--primary)] underline">Don’t have an account? Sign up</a>
+          <a href="/signup" className="text-[var(--primary)] underline">
+            Don’t have an account? Sign up
+          </a>
         </div>
       </form>
     </div>
