@@ -1,6 +1,5 @@
 // src/pages/member/Profile.jsx
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
@@ -29,7 +28,6 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
 
       <main className="max-w-3xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>

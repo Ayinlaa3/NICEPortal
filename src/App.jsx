@@ -7,6 +7,8 @@ import NewRegistration from "@/pages/public/NewRegistration";
 import Dashboard from "@/pages/member/Dashboard";
 import AdminDashboard from "@/pages/admin/Dashboard";
 import ProtectedRoute from "@/components/ProtectedRoute";
+import Profile from "@/pages/member/Profile";
+import { useAuth } from "@/hooks/useAuth";
 
 const App = () => {
   return (
@@ -18,6 +20,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/register" element={<NewRegistration />} />
+        <Route path="/profile" element={<Profile />} />
 
         {/* Protected Member Route */}
         <Route element={<ProtectedRoute role="member" />}>
