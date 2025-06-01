@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
-import Navbar from "@/components/Navbar"; // ✅ fixed import
-// import Footer from "@/components/Footer"; // ✅ assumed reusable
+import Footer from "@/components/Footer"; // ✅ assumed reusable
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -47,7 +46,6 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
       <div className="flex items-center justify-center px-4 py-12">
         <form
           onSubmit={handleSubmit}
@@ -165,7 +163,7 @@ const Signup = () => {
           </Button>
         </form>
       </div>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 };

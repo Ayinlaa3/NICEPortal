@@ -1,21 +1,39 @@
+// src/App.jsx
 import { Routes, Route } from "react-router-dom";
-import Dashboard from "./pages/member/Dashboard";
-import PaymentPortal from "./pages/PaymentPortal";
-import Login from "./pages/public/Login";
-import Signup from "./pages/public/Signup";
+import Navbar from "@/components/Navbar";
+import Login from "@/pages/public/Login";
+import Signup from "@/pages/public/Signup";
+import NewRegistration from "@/pages/public/NewRegistration";
+import Dashboard from "@/pages/member/Dashboard";
+import AdminDashboard from "@/pages/admin/Dashboard";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import Profile from "@/pages/member/Profile";
+import { useAuth } from "@/hooks/useAuth";
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route path="/dashboard" element={<Dashboard />} />
-      <Route path="/payments" element={<PaymentPortal />} />
-      <Route path="/signup" element={<Signup />} />
-      {/* Add more routes as needed */}
-    </Routes>
+    <div className="min-h-screen bg-[var(--background)]">
+      <Navbar />
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/register" element={<NewRegistration />} />
+        <Route path="/profile" element={<Profile />} />
+
+        {/* Protected Member Route */}
+        <Route element={<ProtectedRoute role="member" />}>
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Route>
+
+        {/* Protected Admin Route */}
+        <Route element={<ProtectedRoute role="admin" />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
+      </Routes>
+    </div>
   );
 };
 
 export default App;
-
-
