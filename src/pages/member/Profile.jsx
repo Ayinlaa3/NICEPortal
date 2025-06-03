@@ -1,8 +1,8 @@
 // src/pages/member/Profile.jsx
 import { useState } from "react";
-import Footer from "@/components/Footer";
 import Button from "@/components/ui/Button";
 import { useAuth } from "@/hooks/useAuth";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -27,8 +27,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-
+    <RoleBasedLayout>
       <main className="max-w-3xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Edit Profile</h1>
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow space-y-4">
@@ -113,11 +112,8 @@ const Profile = () => {
           <Button type="submit" className="w-full">Save Changes</Button>
         </form>
       </main>
-
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 
 export default Profile;
-// This code defines a Profile component that allows users to edit their profile information.
