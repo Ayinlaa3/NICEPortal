@@ -9,14 +9,14 @@ const AdminDashboard = () => {
       id: 1,
       name: "Ayo Ayinla",
       email: "ayo@nice.org",
-      grade: "Graduate",
+      grade: "Member",
       status: "Pending",
     },
     {
       id: 2,
       name: "Chinwe Okafor",
       email: "chinwe@nice.org",
-      grade: "Member",
+      grade: "Fellow",
       status: "Approved",
     },
   ]);
@@ -37,11 +37,11 @@ const AdminDashboard = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white p-4 shadow rounded-xl">
             <h2 className="text-sm text-gray-500">Total Members</h2>
-            <p className="text-2xl font-bold">324</p>
+            <p className="text-2xl font-bold">8,546</p>
           </div>
           <div className="bg-white p-4 shadow rounded-xl">
             <h2 className="text-sm text-gray-500">Pending Applications</h2>
-            <p className="text-2xl font-bold">18</p>
+            <p className="text-2xl font-bold">120</p>
           </div>
           <div className="bg-white p-4 shadow rounded-xl">
             <h2 className="text-sm text-gray-500">Payments Received</h2>

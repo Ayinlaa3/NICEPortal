@@ -5,19 +5,19 @@ import Button from "@/components/ui/Button";
 const approvals = [
   {
     id: 11,
-    name: "John Smith",
+    name: "Chike Nnamdi Ejiofor",
     email: "john@nice.org",
     grade: "Graduate",
-    regNo: "NICE/45678",
-    chapter: "North Central",
+    regNo: "G-45678",
+    chapter: "Enugu",
   },
   {
     id: 12,
-    name: "Fatima Musa",
+    name: "Fatima Aliyu Musa",
     email: "fatima@nice.org",
-    grade: "Associate",
-    regNo: "NICE/56789",
-    chapter: "North East",
+    grade: "Fellow",
+    regNo: "F-56789",
+    chapter: "Katsina",
   },
 ];
 

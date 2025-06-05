@@ -35,7 +35,7 @@ const Signup = () => {
         navigate("/login"); // redirect existing users
       } else {
         console.log("Register new member", form);
-        navigate("/register"); // go to NewRegistration.jsx
+        navigate("/new-registration"); // go to NewRegistration.jsx
       }
     } catch (err) {
       setError("An error occurred. Try again.");
