@@ -1,4 +1,153 @@
 // src/pages/public/NewRegistration.jsx
+
+// import { useState } from "react";
+// import Navbar from "@/components/Navbar";
+// import Footer from "@/components/Footer";
+// import Button from "@/components/ui/Button";
+
+// const categories = [
+//   "Student",
+//   "Graduate",
+//   "Associate",
+//   "Member",
+//   "Fellow (By Registration)",
+//   "Fellow (By Invitation)"
+// ];
+
+// const NewRegistration = () => {
+//   const [form, setForm] = useState({
+//     category: "",
+//     name: "",
+//     email: "",
+//     phone: "",
+//     chapter: "",
+//     photo: null,
+//     certificate: null
+//   });
+
+//   const handleChange = (e) => {
+//     const { name, value, files } = e.target;
+//     setForm((prev) => ({
+//       ...prev,
+//       [name]: files ? files[0] : value
+//     }));
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     console.log("New Registration Data:", form);
+//     // TODO: Send to backend API
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-[var(--background)]">
+//       <Navbar />
+//       <main className="max-w-4xl mx-auto px-4 py-10">
+//         <h1 className="text-2xl font-bold mb-6 text-center">New Member Registration</h1>
+//         <form
+//           onSubmit={handleSubmit}
+//           className="bg-white p-6 rounded-xl shadow space-y-6"
+//         >
+//           <div className="grid md:grid-cols-2 gap-4">
+//             <div>
+//               <label className="block text-sm font-semibold">Membership Category</label>
+//               <select
+//                 name="category"
+//                 value={form.category}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full border p-3 rounded-md"
+//               >
+//                 <option value="">Select category</option>
+//                 {categories.map((cat) => (
+//                   <option key={cat}>{cat}</option>
+//                 ))}
+//               </select>
+//             </div>
+//             <div>
+//               <label className="block text-sm font-semibold">Full Name</label>
+//               <input
+//                 type="text"
+//                 name="name"
+//                 value={form.name}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full border p-3 rounded-md"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-sm font-semibold">Email</label>
+//               <input
+//                 type="email"
+//                 name="email"
+//                 value={form.email}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full border p-3 rounded-md"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-sm font-semibold">Phone Number</label>
+//               <input
+//                 type="tel"
+//                 name="phone"
+//                 value={form.phone}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full border p-3 rounded-md"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-sm font-semibold">Chapter</label>
+//               <input
+//                 type="text"
+//                 name="chapter"
+//                 value={form.chapter}
+//                 onChange={handleChange}
+//                 required
+//                 className="w-full border p-3 rounded-md"
+//               />
+//             </div>
+//           </div>
+
+//           <div className="grid md:grid-cols-2 gap-4">
+//             <div>
+//               <label className="block text-sm font-semibold">Passport Photo</label>
+//               <input
+//                 type="file"
+//                 name="photo"
+//                 accept="image/*"
+//                 onChange={handleChange}
+//                 className="w-full border p-2 rounded-md"
+//               />
+//             </div>
+//             <div>
+//               <label className="block text-sm font-semibold">Certificates</label>
+//               <input
+//                 type="file"
+//                 name="certificate"
+//                 accept="application/pdf,image/*"
+//                 onChange={handleChange}
+//                 className="w-full border p-2 rounded-md"
+//               />
+//             </div>
+//           </div>
+
+//           <Button type="submit" className="w-full">
+//             Proceed to Payment
+//           </Button>
+//         </form>
+//       </main>
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default NewRegistration;
+
+
+
+
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import Footer from "@/components/Footer";
@@ -110,6 +259,17 @@ const NewRegistration = () => {
                 required
               />
             </div>
+            <div>
+               <label className="block text-sm font-semibold">Chapter</label>
+               <input
+                 type="text"
+                 name="chapter"
+                 value={form.chapter}
+                 onChange={handleChange}
+                 required
+                className="w-full border p-3 rounded-md"
+              />
+             </div>
 
             <div>
               <label className="block text-sm font-semibold">Grade Category</label>

@@ -7,10 +7,10 @@ const mockMember = {
   id: 1,
   name: "Ayo Ayinla",
   email: "ayo@nice.org",
-  regNo: "NICE/12345",
-  grade: "Graduate",
+  regNo: "M-12345",
+  grade: "Member",
   phone: "08020000000",
-  chapter: "Southwest",
+  chapter: "Lagos Chapter",
   status: "Pending",
   address: "12 NICE Road, Ibadan",
 };

@@ -21,7 +21,7 @@ const Login = () => {
       let role;
       if (email === "admin@nice.org" && password === "admin123") {
         role = "admin";
-      } else if (email === "member@nice.org" && password === "NICEmember123") {
+      } else if (email === "member@nice.org" && password === "member123") {
         role = "member";
       } else {
         throw new Error("Invalid email or password.");
