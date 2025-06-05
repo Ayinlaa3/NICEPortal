@@ -1,6 +1,5 @@
 // src/App.jsx
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import LandingPage from "@/pages/LandingPage";
+import { Routes, Route } from "react-router-dom";
 import Login from "@/pages/public/Login";
 import Signup from "@/pages/public/Signup";
 import NewRegistration from "@/pages/public/NewRegistration";
@@ -9,7 +8,7 @@ import Dashboard from "@/pages/member/Dashboard";
 import Profile from "@/pages/member/Profile";
 import Uploads from "@/pages/member/Uploads";
 import PaymentHistory from "@/pages/member/PaymentHistory";
-import AdminDashboard from "@/pages/admin/Dashboard";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
 import MemberDetail from "@/pages/admin/MemberDetail";
 import Approvals from "@/pages/admin/Approvals";
 import Payments from "@/pages/admin/Payments";
@@ -18,11 +17,9 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const App = () => {
   return (
-    <Router>
       <Routes>
         {/* Public */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/new-registration" element={<NewRegistration />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
@@ -67,7 +64,6 @@ const App = () => {
           element={<ProtectedRoute role="admin"><Reports /></ProtectedRoute>}
         />
       </Routes>
-    </Router>
   );
 };
 

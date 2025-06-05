@@ -1,5 +1,5 @@
 // src/pages/admin/Approvals.jsx
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import Button from "@/components/ui/Button";
 
 const approvals = [
@@ -23,7 +23,7 @@ const approvals = [
 
 const Approvals = () => {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <RoleBasedLayout>
 
       <main className="max-w-5xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Pending Approvals</h1>
@@ -57,9 +57,7 @@ const Approvals = () => {
           </table>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 

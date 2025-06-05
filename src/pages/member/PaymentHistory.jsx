@@ -1,6 +1,5 @@
 // src/pages/member/PaymentHistory.jsx
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 
 const payments = [
   {
@@ -21,8 +20,7 @@ const payments = [
 
 const PaymentHistory = () => {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
+    <RoleBasedLayout>
 
       <main className="max-w-4xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Payment History</h1>
@@ -54,8 +52,7 @@ const PaymentHistory = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 

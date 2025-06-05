@@ -1,5 +1,5 @@
 // src/pages/member/Dashboard.jsx
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import { useAuth } from "@/hooks/useAuth";
 import Button from "@/components/ui/Button";
 
@@ -7,55 +7,114 @@ const Dashboard = () => {
   const { user } = useAuth();
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <RoleBasedLayout>
+      <h1 className="text-2xl font-bold mb-6 text-[var(--primary)]">
+        Welcome, {user?.email?.split("@")[0] || "Member"}
+      </h1>
+      <p className="text-gray-600 mb-6">This is your personalized member dashboard.</p>
 
-      <section className="px-4 py-8 max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold mb-2 text-[var(--primary)]">
-          Welcome, {user?.email?.split("@")[0] || "Member"}
-        </h1>
-        <p className="text-gray-600 mb-6">This is your personalized member dashboard.</p>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          {/* Membership Status */}
-          <div className="bg-white shadow-md rounded-xl p-6">
-            <h2 className="text-lg font-semibold mb-2">Membership Status</h2>
-            <div className="flex justify-between items-center">
-              <span className="font-medium text-green-600">Active</span>
-              <span className="text-sm text-gray-500">Valid until 31 Dec 2025</span>
-            </div>
-          </div>
-
-          {/* Quick Actions */}
-          <div className="bg-white shadow-md rounded-xl p-6 space-y-4">
-            <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
-            <Button className="w-full">Download ID Card</Button>
-            <Button type="secondary" className="w-full">Download Certificate</Button>
-          </div>
-
-          {/* Member Info */}
-          <div className="md:col-span-2 bg-white shadow-md rounded-xl p-6">
-            <h2 className="text-lg font-semibold mb-4">Your Profile</h2>
-            <div className="grid md:grid-cols-3 gap-4 text-sm">
-              <div><strong>Email:</strong><br /> {user?.email}</div>
-              <div><strong>Role:</strong><br /> {user?.role}</div>
-              <div><strong>Phone:</strong><br /> +234 802 000 0000</div>
-              <div><strong>Membership Grade:</strong><br /> Member</div>
-              <div><strong>Reg Number:</strong><br /> NICE/12345</div>
-              <div><strong>Chapter:</strong><br /> Southwest</div>
-            </div>
-            <div className="text-right mt-4">
-              <a href="/profile" className="text-[var(--primary)] underline text-sm">Edit Profile</a>
-            </div>
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Membership Status */}
+        <div className="bg-white shadow-md rounded-xl p-6">
+          <h2 className="text-lg font-semibold mb-2">Membership Status</h2>
+          <div className="flex justify-between items-center">
+            <span className="font-medium text-green-600">Active</span>
+            <span className="text-sm text-gray-500">Valid until 31 Dec 2025</span>
           </div>
         </div>
-      </section>
 
-      <Footer />
-    </div>
+        {/* Quick Actions */}
+        <div className="bg-white shadow-md rounded-xl p-6 space-y-4">
+          <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
+          <Button className="w-full">Download ID Card</Button>
+          <Button type="secondary" className="w-full">Download Certificate</Button>
+        </div>
+
+        {/* Member Info */}
+        <div className="md:col-span-2 bg-white shadow-md rounded-xl p-6">
+          <h2 className="text-lg font-semibold mb-4">Your Profile</h2>
+          <div className="grid md:grid-cols-3 gap-4 text-sm">
+            <div><strong>Email:</strong><br /> {user?.email}</div>
+            <div><strong>Role:</strong><br /> {user?.role}</div>
+            <div><strong>Phone:</strong><br /> +234 802 000 0000</div>
+            <div><strong>Membership Grade:</strong><br /> Member</div>
+            <div><strong>Reg Number:</strong><br /> NICE/12345</div>
+            <div><strong>Chapter:</strong><br /> Southwest</div>
+          </div>
+          <div className="text-right mt-4">
+            <a href="/profile" className="text-[var(--primary)] underline text-sm">Edit Profile</a>
+          </div>
+        </div>
+      </div>
+    </RoleBasedLayout>
   );
 };
 
 export default Dashboard;
+
+
+
+
+
+
+
+// import Footer from "@/components/Footer";
+// import { useAuth } from "@/hooks/useAuth";
+// import Button from "@/components/ui/Button";
+
+// const Dashboard = () => {
+//   const { user } = useAuth();
+
+//   return (
+//     <div className="min-h-screen bg-[var(--background)]">
+
+//       <section className="px-4 py-8 max-w-5xl mx-auto">
+//         <h1 className="text-2xl font-bold mb-2 text-[var(--primary)]">
+//           Welcome, {user?.email?.split("@")[0] || "Member"}
+//         </h1>
+//         <p className="text-gray-600 mb-6">This is your personalized member dashboard.</p>
+
+//         <div className="grid md:grid-cols-2 gap-6">
+//           {/* Membership Status */}
+//           <div className="bg-white shadow-md rounded-xl p-6">
+//             <h2 className="text-lg font-semibold mb-2">Membership Status</h2>
+//             <div className="flex justify-between items-center">
+//               <span className="font-medium text-green-600">Active</span>
+//               <span className="text-sm text-gray-500">Valid until 31 Dec 2025</span>
+//             </div>
+//           </div>
+
+//           {/* Quick Actions */}
+//           <div className="bg-white shadow-md rounded-xl p-6 space-y-4">
+//             <h2 className="text-lg font-semibold mb-2">Quick Actions</h2>
+//             <Button className="w-full">Download ID Card</Button>
+//             <Button type="secondary" className="w-full">Download Certificate</Button>
+//           </div>
+
+//           {/* Member Info */}
+//           <div className="md:col-span-2 bg-white shadow-md rounded-xl p-6">
+//             <h2 className="text-lg font-semibold mb-4">Your Profile</h2>
+//             <div className="grid md:grid-cols-3 gap-4 text-sm">
+//               <div><strong>Email:</strong><br /> {user?.email}</div>
+//               <div><strong>Role:</strong><br /> {user?.role}</div>
+//               <div><strong>Phone:</strong><br /> +234 802 000 0000</div>
+//               <div><strong>Membership Grade:</strong><br /> Member</div>
+//               <div><strong>Reg Number:</strong><br /> NICE/12345</div>
+//               <div><strong>Chapter:</strong><br /> Southwest</div>
+//             </div>
+//             <div className="text-right mt-4">
+//               <a href="/profile" className="text-[var(--primary)] underline text-sm">Edit Profile</a>
+//             </div>
+//           </div>
+//         </div>
+//       </section>
+
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default Dashboard;
 
 
 

@@ -1,8 +1,8 @@
-// src/pages/admin/Dashboard.jsx
-import Footer from "@/components/Footer";
+// src/pages/admin/AdminDashboard.jsx
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import { useState } from "react";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([
     {
@@ -28,7 +28,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+     <RoleBasedLayout>
 
       <main className="max-w-6xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
@@ -97,10 +97,8 @@ const Dashboard = () => {
           </table>
         </div>
       </main>
-
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

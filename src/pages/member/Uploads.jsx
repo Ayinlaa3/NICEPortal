@@ -1,6 +1,5 @@
 // src/pages/member/Uploads.jsx
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import Button from "@/components/ui/Button";
 import { useState } from "react";
 
@@ -27,8 +26,7 @@ const Uploads = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
+    <RoleBasedLayout>
 
       <main className="max-w-2xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-4">Upload Missing Documents</h1>
@@ -74,8 +72,7 @@ const Uploads = () => {
         </form>
       </main>
 
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 

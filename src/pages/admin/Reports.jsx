@@ -1,5 +1,5 @@
 // src/pages/admin/Reports.jsx
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 
 const reports = [
   { label: "Total Revenue (2024)", value: 12540000 },
@@ -10,7 +10,7 @@ const reports = [
 
 const Reports = () => {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <RoleBasedLayout>
 
       <main className="max-w-5xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Reports Summary</h1>
@@ -27,8 +27,7 @@ const Reports = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+    </RoleBasedLayout>
   );
 };
 

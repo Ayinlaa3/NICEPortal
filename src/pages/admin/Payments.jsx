@@ -1,6 +1,5 @@
 // src/pages/admin/Payments.jsx
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 
 const payments = [
   {
@@ -27,8 +26,7 @@ const payments = [
 
 const Payments = () => {
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Navbar />
+    <RoleBasedLayout>
 
       <main className="max-w-6xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Payments Overview</h1>
@@ -65,8 +63,7 @@ const Payments = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+  </RoleBasedLayout>
   );
 };
 

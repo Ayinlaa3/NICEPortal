@@ -1,6 +1,6 @@
 // src/pages/admin/MemberDetail.jsx
 import { useParams } from "react-router-dom";
-import Footer from "@/components/Footer";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import Button from "@/components/ui/Button";
 
 const mockMember = {
@@ -20,7 +20,7 @@ const MemberDetail = () => {
   const member = mockMember; // Replace with API call later
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
+    <RoleBasedLayout>
 
       <main className="max-w-4xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Member Details</h1>
@@ -65,8 +65,7 @@ const MemberDetail = () => {
         </div>
       </main>
 
-      <Footer />
-    </div>
+   </RoleBasedLayout>
   );
 };
 
