@@ -1,56 +1,57 @@
-// src/pages/admin/AdminDashboard.jsx
+import { useEffect, useState } from "react";
 import RoleBasedLayout from "@/components/RoleBasedLayout";
-import { useState } from "react";
+import { fetchAllMembers, searchMembers } from "@/lib/admin";
 
 const AdminDashboard = () => {
   const [query, setQuery] = useState("");
-  const [results, setResults] = useState([
-    {
-      id: 1,
-      name: "Ayo Ayinla",
-      email: "ayo@nice.org",
-      grade: "Member",
-      status: "Pending",
-    },
-    {
-      id: 2,
-      name: "Chinwe Okafor",
-      email: "chinwe@nice.org",
-      grade: "Fellow",
-      status: "Approved",
-    },
-  ]);
+  const [results, setResults] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const handleSearch = (e) => {
+  // Load members on first load
+  useEffect(() => {
+    const loadMembers = async () => {
+      try {
+        const data = await fetchAllMembers();
+        setResults(data);
+      } catch (error) {
+        console.error("Error loading members:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadMembers();
+  }, []);
+
+  const handleSearch = async (e) => {
     e.preventDefault();
-    console.log("Searching for:", query);
-    // TODO: Call backend API with query
+    if (!query) return;
+
+    try {
+      const data = await searchMembers(query);
+      setResults(data);
+    } catch (error) {
+      console.error("Search failed:", error);
+    }
   };
 
   return (
-     <RoleBasedLayout>
-
+    <RoleBasedLayout>
       <main className="max-w-6xl mx-auto p-6">
         <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
-        {/* Summary Cards */}
+        {/* Summary Cards - static for now */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           <div className="bg-white p-4 shadow rounded-xl">
             <h2 className="text-sm text-gray-500">Total Members</h2>
-            <p className="text-2xl font-bold">8,546</p>
+            <p className="text-2xl font-bold">{results.length}</p>
           </div>
           <div className="bg-white p-4 shadow rounded-xl">
             <h2 className="text-sm text-gray-500">Pending Applications</h2>
-            <p className="text-2xl font-bold">120</p>
+            <p className="text-2xl font-bold">
+              {results.filter((m) => m.status === "Pending").length}
+            </p>
           </div>
-          <div className="bg-white p-4 shadow rounded-xl">
-            <h2 className="text-sm text-gray-500">Payments Received</h2>
-            <p className="text-2xl font-bold">₦12,540,000</p>
-          </div>
-          <div className="bg-white p-4 shadow rounded-xl">
-            <h2 className="text-sm text-gray-500">Verified Fellows</h2>
-            <p className="text-2xl font-bold">41</p>
-          </div>
+          {/* You can later fetch payment and fellow stats from a dedicated endpoint */}
         </div>
 
         {/* Search */}
@@ -66,35 +67,39 @@ const AdminDashboard = () => {
 
         {/* Results Table */}
         <div className="bg-white shadow rounded-xl overflow-x-auto">
-          <table className="min-w-full text-sm">
-            <thead className="bg-[var(--primary)] text-white">
-              <tr>
-                <th className="text-left px-6 py-3">Name</th>
-                <th className="text-left px-6 py-3">Email</th>
-                <th className="text-left px-6 py-3">Grade</th>
-                <th className="text-left px-6 py-3">Status</th>
-                <th className="text-left px-6 py-3">Action</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200">
-              {results.map((m) => (
-                <tr key={m.id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium">{m.name}</td>
-                  <td className="px-6 py-4">{m.email}</td>
-                  <td className="px-6 py-4">{m.grade}</td>
-                  <td className="px-6 py-4">{m.status}</td>
-                  <td className="px-6 py-4">
-                    <a
-                      href={`/admin/members/${m.id}`}
-                      className="text-[var(--primary)] underline"
-                    >
-                      View
-                    </a>
-                  </td>
+          {loading ? (
+            <p className="p-6">Loading...</p>
+          ) : (
+            <table className="min-w-full text-sm">
+              <thead className="bg-[var(--primary)] text-white">
+                <tr>
+                  <th className="text-left px-6 py-3">Name</th>
+                  <th className="text-left px-6 py-3">Email</th>
+                  <th className="text-left px-6 py-3">Grade</th>
+                  <th className="text-left px-6 py-3">Status</th>
+                  <th className="text-left px-6 py-3">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-200">
+                {results.map((m) => (
+                  <tr key={m.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 font-medium">{m.full_name}</td>
+                    <td className="px-6 py-4">{m.email}</td>
+                    <td className="px-6 py-4">{m.member_grade}</td>
+                    <td className="px-6 py-4">{m.status}</td>
+                    <td className="px-6 py-4">
+                      <a
+                        href={`/admin/members/${m.id}`}
+                        className="text-[var(--primary)] underline"
+                      >
+                        View
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </main>
     </RoleBasedLayout>
