@@ -1,19 +1,16 @@
-/* Fonts */
 @import url('https://db.onlinewebfonts.com/c/527ea5851ca62a9a758a44dc39437eae?family=Old+English+Text+MT+V2');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-/* Swiper styles */
 @import 'swiper/css';
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
-/* ✅ Tailwind v4-compatible imports */
-@import "tailwindcss/preflight";
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+/* ✅ Tailwind v3 directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Root CSS Variables */
+/* Custom CSS */
 :root {
   --radius: 15px;
   --background: #ffffff;
@@ -35,14 +32,11 @@
   --font-mono: "Fira Code", "Courier New", monospace;
 }
 
-/* Base Layer */
 @layer base {
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
   }
 
   a {
@@ -54,10 +48,6 @@
   button {
     cursor: pointer;
     outline: none;
-  }
-
-  button:hover {
-    opacity: 0.9;
   }
 
   button:disabled {
