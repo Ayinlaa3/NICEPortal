@@ -1,6 +1,7 @@
 // src/App.jsx
 import { Routes, Route } from "react-router-dom";
 import Login from "@/pages/public/Login";
+import ForgotPassword from "@/pages/public/ForgotPassword";
 import Signup from "@/pages/public/Signup";
 import NewRegistration from "@/pages/public/NewRegistration";
 import PaymentStatus from "@/pages/public/PaymentStatus";
@@ -20,6 +21,7 @@ const App = () => {
       <Routes>
         {/* Public */}
         <Route path="/" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/new-registration" element={<NewRegistration />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
