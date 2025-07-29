@@ -1,29 +1,19 @@
-/* Import fonts */
+/* Fonts */
 @import url('https://db.onlinewebfonts.com/c/527ea5851ca62a9a758a44dc39437eae?family=Old+English+Text+MT+V2');
 @import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
 
-/* Import Swiper styles */
+/* Swiper styles */
 @import 'swiper/css';
 @import 'swiper/css/navigation';
 @import 'swiper/css/pagination';
 
-/* ✅ Tailwind v4 imports */
+/* ✅ Tailwind v4-compatible imports */
 @import "tailwindcss/preflight";
+@import "tailwindcss/base";
+@import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
-/* Import fonts
-@import url('https://db.onlinewebfonts.com/c/527ea5851ca62a9a758a44dc39437eae?family=Old+English+Text+MT+V2');
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap');
-
-/* Import Swiper styles */
-/* @import 'swiper/css';
-@import 'swiper/css/navigation';
-@import 'swiper/css/pagination'; */
-
-/* Import Tailwind CSS */
-/* @import "tailwindcss"; * */
-
-/* Root variables for consistent theming */
+/* Root CSS Variables */
 :root {
   --radius: 15px;
   --background: #ffffff;
@@ -41,29 +31,11 @@
   --border: #FF531C;
   --input: #03823B;
   --ring: #3b82f6;
-  --font-sans:  "Mulish", sans-serif;
+  --font-sans: "Mulish", sans-serif;
   --font-mono: "Fira Code", "Courier New", monospace;
 }
 
-/* .dark {
-  --background: #1f2937;
-  --foreground: #f9fafb;
-  --primary: #3b82f6;
-  --primary-foreground: #ffffff;
-  --secondary: #4b5563;
-  --secondary-foreground: #ffffff;
-  --muted: #374151;
-  --muted-foreground: #d1d5db;
-  --accent: #10b981;
-  --accent-foreground: #ffffff;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --border: #374151;
-  --input: #1f2937;
-  --ring: #2563eb;
-} */
-
-/* Base styles */
+/* Base Layer */
 @layer base {
   body {
     background-color: var(--background);
@@ -72,10 +44,6 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
-  /* h1{
-    @apply text-[55px] font-extrabold leading-[55px];
-  } */
 
   a {
     color: inherit;
@@ -86,15 +54,10 @@
   button {
     cursor: pointer;
     outline: none;
-    /* transition: background-color 0.2s ease, transform 0.1s ease; */
+  }
 
-    &:hover {
-      opacity: 0.9;
-    }
-
-    /* &:active {
-      transform: scale(0.98);
-    } */
+  button:hover {
+    opacity: 0.9;
   }
 
   button:disabled {
@@ -103,12 +66,6 @@
   }
 }
 
-#quickLinks > *:not(:last-child){
+#quickLinks > *:not(:last-child) {
   border-right: 2px solid var(--border);
 }
-
-/* #event-details > li{
-  list-style-image: url("/icons/clock.svg");
-  list-style-position: inside; 
-  list-style-type: none;
-} */
