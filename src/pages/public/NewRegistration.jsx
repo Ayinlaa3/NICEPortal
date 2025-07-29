@@ -147,12 +147,12 @@
 
 
 
-
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import Footer from "@/components/Footer";
 import { usePaymentGateway } from "@/hooks/usePaymentGateway";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const gradePricing = {
   Student: 7500,
@@ -173,44 +173,81 @@ const NewRegistration = () => {
     phone: "",
     photo: null,
     certificate: null,
+    chapter: "",
   });
+
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (files) {
-      setForm({ ...form, [name]: files[0] });
+      setForm((prev) => ({ ...prev, [name]: files[0] }));
     } else {
-      setForm({ ...form, [name]: value });
+      setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const amount = gradePricing[form.grade] || 0;
-
+    const amount = gradePricing[form.grade];
     if (!amount) {
       alert("Please select a valid membership grade.");
       return;
     }
 
-    const metadata = {
-      fullname: form.fullname,
-      grade: form.grade,
-      phone: form.phone,
-    };
+    setLoading(true);
+    setError(null);
 
-    initializePaystack({
-      email: form.email,
-      amount,
-      metadata,
-      onSuccess: (res) => {
-        console.log("Payment success:", res);
-        navigate("/payment-status?status=success");
-      },
-      onClose: () => {
-        navigate("/payment-status?status=cancelled");
-      },
-    });
+    try {
+      // 1. Submit registration to backend
+      const payload = new FormData();
+      payload.append("grade", form.grade);
+      payload.append("fullname", form.fullname);
+      payload.append("email", form.email);
+      payload.append("phone", form.phone);
+      payload.append("chapter", form.chapter);
+      payload.append("photo", form.photo);
+      payload.append("certificate", form.certificate);
+
+      const response = await axios.post(
+        "https://nicengineers.com/api/members/register/",
+        payload,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true,
+        }
+      );
+
+      if (response.status === 201 || response.status === 200) {
+        // 2. Continue to Paystack
+        const metadata = {
+          fullname: form.fullname,
+          grade: form.grade,
+          phone: form.phone,
+          chapter: form.chapter,
+        };
+
+        initializePaystack({
+          email: form.email,
+          amount,
+          metadata,
+          onSuccess: () => {
+            navigate("/payment-status?status=success");
+          },
+          onClose: () => {
+            navigate("/payment-status?status=cancelled");
+          },
+        });
+      } else {
+        throw new Error("Something went wrong.");
+      }
+    } catch (err) {
+      console.error(err);
+      setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -221,7 +258,11 @@ const NewRegistration = () => {
           className="bg-white p-8 rounded-xl shadow-lg w-full max-w-3xl space-y-6"
           encType="multipart/form-data"
         >
-          <h2 className="text-2xl font-bold text-center">New Member Registration</h2>
+          <h2 className="text-2xl font-bold text-center">
+            New Member Registration
+          </h2>
+
+          {error && <p className="text-red-500 text-center text-sm">{error}</p>}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -259,20 +300,21 @@ const NewRegistration = () => {
                 required
               />
             </div>
-            <div>
-               <label className="block text-sm font-semibold">Chapter</label>
-               <input
-                 type="text"
-                 name="chapter"
-                 value={form.chapter}
-                 onChange={handleChange}
-                 required
-                className="w-full border p-3 rounded-md"
-              />
-             </div>
 
             <div>
-              <label className="block text-sm font-semibold">Grade Category</label>
+              <label className="block text-sm font-semibold">Chapter</label>
+              <input
+                type="text"
+                name="chapter"
+                value={form.chapter}
+                onChange={handleChange}
+                className="w-full border p-3 rounded-md"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold">Grade</label>
               <select
                 name="grade"
                 value={form.grade}
@@ -315,8 +357,14 @@ const NewRegistration = () => {
             </div>
           </div>
 
-          <Button type="submit" className="w-full">
-            Proceed to Payment ({gradePricing[form.grade] ? `₦${gradePricing[form.grade].toLocaleString()}` : ""})
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading
+              ? "Submitting..."
+              : `Proceed to Payment ${
+                  gradePricing[form.grade]
+                    ? `₦${gradePricing[form.grade].toLocaleString()}`
+                    : ""
+                }`}
           </Button>
         </form>
       </div>
@@ -326,5 +374,6 @@ const NewRegistration = () => {
 };
 
 export default NewRegistration;
+
 
 // This code defines a NewRegistration component that allows users to register as new members of NICE.

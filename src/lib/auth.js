@@ -1,4 +1,14 @@
 import axios from './api';
+import axios from "axios";
+
+const BASE_URL = "https://nicengineers.com/api";
+
+export const verifyMember = (data) => {
+  return axios.post(`${BASE_URL}/auth/verify-member/`, data, {
+    withCredentials: true,
+  });
+};
+
 
 export const login = async (credentials) => {
   return axios.post('/auth/login/', credentials, {
