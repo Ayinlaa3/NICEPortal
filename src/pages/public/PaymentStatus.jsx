@@ -1,8 +1,8 @@
 // src/pages/public/PaymentStatus.jsx
 
 import { useSearchParams } from "react-router-dom";
-import Navbar from "@/components/ui/Navbar";
-import Footer from "@/components/ui/Footer";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const PaymentStatus = () => {
   const [params] = useSearchParams();
