@@ -1,4 +1,5 @@
-// src/pages/public/Login.jsx
+// // src/pages/public/Login.jsx
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login as loginAPI } from "@/lib/auth";
@@ -36,10 +37,10 @@ const Login = () => {
         ? { email: formData.emailOrID, password: formData.password }
         : { membership_id: formData.emailOrID, password: formData.password };
 
-      const member = await loginAPI(payload);
-      setAuthUser(member);
+      const response = await loginAPI(payload);
+      setAuthUser(response.data);
 
-      if (member.role === "admin") {
+      if (response.data.role === "admin") {
         navigate("/admin");
       } else {
         navigate("/dashboard");
@@ -53,16 +54,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <form
         onSubmit={handleSubmit}
-        className="bg-white p-8 shadow-md rounded-xl w-full max-w-md space-y-4"
+        className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl"
       >
         <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
           Member Login
         </h2>
 
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div>
           <label className="block text-sm font-medium">
@@ -74,7 +75,7 @@ const Login = () => {
             required
             value={formData.emailOrID}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border rounded-md"
+            className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
 
@@ -86,11 +87,11 @@ const Login = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border rounded-md"
+            className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
 
-        <div className="text-right text-sm">
+        <div className="text-sm text-right">
           <Link
             to="/forgot-password"
             className="text-[var(--primary)] hover:underline"
@@ -102,12 +103,137 @@ const Login = () => {
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
+
+        <div className="text-sm text-center">
+          Don’t have an account?{" "}
+          <Link
+            to="/new-registration"
+            className="text-[var(--primary)] hover:underline"
+          >
+            Register here
+          </Link>
+        </div>
       </form>
     </div>
   );
 };
 
 export default Login;
+
+
+
+
+
+
+// import { useState } from "react";
+// import { useNavigate, Link } from "react-router-dom";
+// import { login as loginAPI } from "@/lib/auth";
+// import { useAuth } from "@/hooks/useAuth";
+// import Button from "@/components/ui/Button";
+
+// const Login = () => {
+//   const navigate = useNavigate();
+//   const { login: setAuthUser } = useAuth();
+
+//   const [formData, setFormData] = useState({
+//     emailOrID: "",
+//     password: "",
+//   });
+
+//   const [error, setError] = useState("");
+//   const [loading, setLoading] = useState(false);
+
+//   const handleChange = (e) => {
+//     setFormData((prev) => ({
+//       ...prev,
+//       [e.target.name]: e.target.value,
+//     }));
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setLoading(true);
+//     setError("");
+
+//     try {
+//       const isEmail = formData.emailOrID.includes("@");
+
+//       const payload = isEmail
+//         ? { email: formData.emailOrID, password: formData.password }
+//         : { membership_id: formData.emailOrID, password: formData.password };
+
+//       const member = await loginAPI(payload);
+//       setAuthUser(member);
+
+//       if (member.role === "admin") {
+//         navigate("/admin");
+//       } else {
+//         navigate("/dashboard");
+//       }
+//     } catch (err) {
+//       console.error(err);
+//       setError("Invalid login credentials");
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   return (
+//     <div className="flex items-center justify-center min-h-screen bg-gray-50">
+//       <form
+//         onSubmit={handleSubmit}
+//         className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl"
+//       >
+//         <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
+//           Member Login
+//         </h2>
+
+//         {error && <p className="text-sm text-red-600">{error}</p>}
+
+//         <div>
+//           <label className="block text-sm font-medium">
+//             Email or Membership ID
+//           </label>
+//           <input
+//             type="text"
+//             name="emailOrID"
+//             required
+//             value={formData.emailOrID}
+//             onChange={handleChange}
+//             className="w-full p-2 mt-1 border rounded-md"
+//           />
+//         </div>
+
+//         <div>
+//           <label className="block text-sm font-medium">Password</label>
+//           <input
+//             type="password"
+//             name="password"
+//             required
+//             value={formData.password}
+//             onChange={handleChange}
+//             className="w-full p-2 mt-1 border rounded-md"
+//           />
+//         </div>
+
+//         <div className="text-sm text-right">
+//           <Link
+//             to="/forgot-password"
+//             className="text-[var(--primary)] hover:underline"
+//           >
+//             Forgot password?
+//           </Link>
+//         </div>
+
+//         <Button className="w-full" type="submit" disabled={loading}>
+//           {loading ? "Logging in..." : "Login"}
+//         </Button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// export default Login;
 
 
 
@@ -156,12 +282,12 @@ export default Login;
 //     <div className="min-h-screen flex items-center justify-center bg-[var(--background)]">
 //       <form
 //         onSubmit={handleSubmit}
-//         className="bg-white shadow-lg p-8 rounded-xl w-full max-w-md space-y-6"
+//         className="w-full max-w-md p-8 space-y-6 bg-white shadow-lg rounded-xl"
 //       >
 //         <h2 className="text-2xl font-bold text-center">Member Login</h2>
 
 //         {error && (
-//           <p className="text-red-500 text-center text-sm">{error}</p>
+//           <p className="text-sm text-center text-red-500">{error}</p>
 //         )}
 
 //         <div className="space-y-2">
@@ -170,7 +296,7 @@ export default Login;
 //             type="email"
 //             value={email}
 //             onChange={(e) => setEmail(e.target.value)}
-//             className="w-full border p-3 rounded-md"
+//             className="w-full p-3 border rounded-md"
 //             required
 //           />
 //         </div>
@@ -181,7 +307,7 @@ export default Login;
 //             type="password"
 //             value={password}
 //             onChange={(e) => setPassword(e.target.value)}
-//             className="w-full border p-3 rounded-md"
+//             className="w-full p-3 border rounded-md"
 //             required
 //           />
 //         </div>
@@ -190,7 +316,7 @@ export default Login;
 //           {loading ? "Logging in..." : "Login"}
 //         </Button>
 
-//         <div className="text-center text-sm mt-4">
+//         <div className="mt-4 text-sm text-center">
 //           <a href="/signup" className="text-[var(--primary)] underline">
 //             Don’t have an account? Sign up
 //           </a>

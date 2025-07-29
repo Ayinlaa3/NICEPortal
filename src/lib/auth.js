@@ -1,13 +1,21 @@
-import api from "./api"; // assuming api.js is in the same folder
+import axios from './api';
 
-export const login = async ({ email, membership_id, password }) => {
-  const response = await api.post("/login/", {
-    email,
-    membership_id,
-    password,
+export const login = async (credentials) => {
+  return axios.post('/auth/login/', credentials, {
+    withCredentials: true, // So the cookie is included
   });
+};
 
-  return response.data.member; // returns the logged-in member info
+export const logout = async () => {
+  return axios.post('/auth/logout/', {}, { withCredentials: true });
+};
+
+export const checkAuthStatus = async () => {
+  return axios.get('/auth/user/', { withCredentials: true });
+};
+
+export const registerMember = async (data) => {
+  return axios.post('/auth/register/', data);
 };
 
 

@@ -1,15 +1,12 @@
-import axios from "axios";
+import axios from 'axios';
 
-const api = axios.create({
-  baseURL: "https://nicengineers.com/api",
-  withCredentials: true, // 👈 send cookies along with requests
-  headers: {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-  },
+const instance = axios.create({
+  baseURL: 'https://nicengineers.com/api',
+  withCredentials: true,
 });
 
-export default api;
+export default instance;
+
 
 
 
