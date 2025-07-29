@@ -146,7 +146,6 @@
 // export default NewRegistration;
 
 
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
@@ -166,7 +165,6 @@ const gradePricing = {
 const NewRegistration = () => {
   const navigate = useNavigate();
   const { initializePaystack } = usePaymentGateway();
-
   const [form, setForm] = useState({
     grade: "",
     fullname: "",
@@ -182,31 +180,35 @@ const NewRegistration = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setForm((prev) => ({
-      ...prev,
-      [name]: files ? files[0] : value,
-    }));
+    if (files) {
+      setForm((prev) => ({ ...prev, [name]: files[0] }));
+    } else {
+      setForm((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const amount = gradePricing[form.grade];
+    if (!amount) {
+      alert("Please select a valid membership grade.");
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
-    const amount = gradePricing[form.grade];
-    if (!amount) {
-      setLoading(false);
-      return alert("Please select a valid membership grade.");
-    }
-
     try {
-      // Send registration data to backend
       const payload = new FormData();
-      Object.entries(form).forEach(([key, value]) => {
-        if (value) payload.append(key, value);
-      });
+      payload.append("grade", form.grade);
+      payload.append("fullname", form.fullname);
+      payload.append("email", form.email);
+      payload.append("phone", form.phone);
+      payload.append("chapter", form.chapter);
+      payload.append("photo", form.photo);
+      payload.append("certificate", form.certificate);
 
-      const res = await axios.post(
+      const response = await axios.post(
         "https://nicengineers.com/api/members/register/",
         payload,
         {
@@ -215,7 +217,7 @@ const NewRegistration = () => {
         }
       );
 
-      if (res.status === 201 || res.status === 200) {
+      if (response.status === 201 || response.status === 200) {
         const metadata = {
           fullname: form.fullname,
           grade: form.grade,
@@ -227,15 +229,15 @@ const NewRegistration = () => {
           email: form.email,
           amount,
           metadata,
-          onSuccess: (response) => {
-            navigate(`/payment-status?status=success&ref=${response.reference}`);
+          onSuccess: () => {
+            navigate("/payment-status?status=success");
           },
           onClose: () => {
             navigate("/payment-status?status=cancelled");
           },
         });
       } else {
-        throw new Error("Failed to submit registration.");
+        throw new Error("Something went wrong.");
       }
     } catch (err) {
       console.error(err);
@@ -253,7 +255,9 @@ const NewRegistration = () => {
           className="w-full max-w-3xl p-8 space-y-6 bg-white shadow-lg rounded-xl"
           encType="multipart/form-data"
         >
-          <h2 className="text-2xl font-bold text-center">New Member Registration</h2>
+          <h2 className="text-2xl font-bold text-center">
+            New Member Registration
+          </h2>
 
           {error && <p className="text-sm text-center text-red-500">{error}</p>}
 
@@ -265,8 +269,8 @@ const NewRegistration = () => {
                 name="fullname"
                 value={form.fullname}
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
 
@@ -277,8 +281,8 @@ const NewRegistration = () => {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
 
@@ -289,8 +293,8 @@ const NewRegistration = () => {
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
 
@@ -301,8 +305,8 @@ const NewRegistration = () => {
                 name="chapter"
                 value={form.chapter}
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
 
@@ -312,8 +316,8 @@ const NewRegistration = () => {
                 name="grade"
                 value={form.grade}
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               >
                 <option value="">Select Grade</option>
                 <option value="Student">Student</option>
@@ -332,8 +336,8 @@ const NewRegistration = () => {
                 name="photo"
                 accept="image/*"
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
 
@@ -344,8 +348,8 @@ const NewRegistration = () => {
                 name="certificate"
                 accept=".pdf,.jpg,.jpeg,.png"
                 onChange={handleChange}
-                required
                 className="w-full p-3 border rounded-md"
+                required
               />
             </div>
           </div>
@@ -367,6 +371,7 @@ const NewRegistration = () => {
 };
 
 export default NewRegistration;
+
 
 
 
