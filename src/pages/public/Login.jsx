@@ -1,5 +1,4 @@
 // // src/pages/public/Login.jsx
-
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { login as loginAPI } from "@/lib/auth";
@@ -54,16 +53,16 @@ const Login = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl"
+        className="bg-white p-8 shadow-md rounded-xl w-full max-w-md space-y-4"
       >
         <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
           Member Login
         </h2>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
+        {error && <p className="text-red-600 text-sm">{error}</p>}
 
         <div>
           <label className="block text-sm font-medium">
@@ -75,7 +74,7 @@ const Login = () => {
             required
             value={formData.emailOrID}
             onChange={handleChange}
-            className="w-full p-2 mt-1 border rounded-md"
+            className="w-full mt-1 p-2 border rounded-md"
           />
         </div>
 
@@ -87,11 +86,11 @@ const Login = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full p-2 mt-1 border rounded-md"
+            className="w-full mt-1 p-2 border rounded-md"
           />
         </div>
 
-        <div className="text-sm text-right">
+        <div className="text-right text-sm">
           <Link
             to="/forgot-password"
             className="text-[var(--primary)] hover:underline"
@@ -104,12 +103,12 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </Button>
 
-        <div className="mt-2 space-y-1 text-sm text-center">
+        <div className="text-sm text-center text-gray-700 space-y-1">
           <p>
             Are you a NICE Member with no credentials?{" "}
             <Link
               to="/signup"
-              className="text-[var(--primary)] font-semibold hover:underline"
+              className="text-[var(--primary)] font-medium hover:underline"
             >
               Signup here
             </Link>
@@ -118,7 +117,7 @@ const Login = () => {
             Not a NICE Member?{" "}
             <Link
               to="/new-registration"
-              className="text-[var(--primary)] font-semibold hover:underline"
+              className="text-[var(--primary)] font-medium hover:underline"
             >
               Register here
             </Link>
