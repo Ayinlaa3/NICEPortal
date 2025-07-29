@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
-import Footer from "@/components/ui/Footer";
+import Footer from "@/components/Footer";
 import axios from "axios";
 
 const Signup = () => {
