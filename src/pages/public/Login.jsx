@@ -104,14 +104,25 @@ const Login = () => {
           {loading ? "Logging in..." : "Login"}
         </Button>
 
-        <div className="text-sm text-center">
-          Don’t have an account?{" "}
-          <Link
-            to="/new-registration"
-            className="text-[var(--primary)] hover:underline"
-          >
-            Register here
-          </Link>
+        <div className="mt-2 space-y-1 text-sm text-center">
+          <p>
+            Are you a NICE Member with no credentials?{" "}
+            <Link
+              to="/signup"
+              className="text-[var(--primary)] font-semibold hover:underline"
+            >
+              Signup here
+            </Link>
+          </p>
+          <p>
+            Not a NICE Member?{" "}
+            <Link
+              to="/new-registration"
+              className="text-[var(--primary)] font-semibold hover:underline"
+            >
+              Register here
+            </Link>
+          </p>
         </div>
       </form>
     </div>
