@@ -1,15 +1,16 @@
-// src/pages/Login.jsx
+// src/pages/public/Login.jsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { login } from "@/lib/auth"; // make sure the path is correct
+import { useNavigate, Link } from "react-router-dom";
+import { login as loginAPI } from "@/lib/auth";
+import { useAuth } from "@/hooks/useAuth";
 import Button from "@/components/ui/Button";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { login: setAuthUser } = useAuth();
 
   const [formData, setFormData] = useState({
-    email: "",
-    membership_id: "",
+    emailOrID: "",
     password: "",
   });
 
@@ -29,16 +30,19 @@ const Login = () => {
     setError("");
 
     try {
-      const member = await login(formData);
+      const isEmail = formData.emailOrID.includes("@");
 
-      // Save user in localStorage or Context (your choice)
-      localStorage.setItem("user", JSON.stringify(member));
+      const payload = isEmail
+        ? { email: formData.emailOrID, password: formData.password }
+        : { membership_id: formData.emailOrID, password: formData.password };
 
-      // Redirect based on role
+      const member = await loginAPI(payload);
+      setAuthUser(member);
+
       if (member.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin");
       } else {
-        navigate("/member/dashboard");
+        navigate("/dashboard");
       }
     } catch (err) {
       console.error(err);
@@ -61,24 +65,14 @@ const Login = () => {
         {error && <p className="text-red-600 text-sm">{error}</p>}
 
         <div>
-          <label className="block text-sm font-medium">Email</label>
-          <input
-            type="email"
-            name="email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full mt-1 p-2 border rounded-md"
-          />
-        </div>
-
-        <div>
-          <label className="block text-sm font-medium">Membership ID</label>
+          <label className="block text-sm font-medium">
+            Email or Membership ID
+          </label>
           <input
             type="text"
-            name="membership_id"
+            name="emailOrID"
             required
-            value={formData.membership_id}
+            value={formData.emailOrID}
             onChange={handleChange}
             className="w-full mt-1 p-2 border rounded-md"
           />
@@ -96,6 +90,15 @@ const Login = () => {
           />
         </div>
 
+        <div className="text-right text-sm">
+          <Link
+            to="/forgot-password"
+            className="text-[var(--primary)] hover:underline"
+          >
+            Forgot password?
+          </Link>
+        </div>
+
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
@@ -105,6 +108,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 
