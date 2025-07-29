@@ -42,13 +42,13 @@
 //   return (
 //     <div className="min-h-screen bg-[var(--background)]">
 //       <Navbar />
-//       <main className="max-w-4xl mx-auto px-4 py-10">
-//         <h1 className="text-2xl font-bold mb-6 text-center">New Member Registration</h1>
+//       <main className="max-w-4xl px-4 py-10 mx-auto">
+//         <h1 className="mb-6 text-2xl font-bold text-center">New Member Registration</h1>
 //         <form
 //           onSubmit={handleSubmit}
-//           className="bg-white p-6 rounded-xl shadow space-y-6"
+//           className="p-6 space-y-6 bg-white shadow rounded-xl"
 //         >
-//           <div className="grid md:grid-cols-2 gap-4">
+//           <div className="grid gap-4 md:grid-cols-2">
 //             <div>
 //               <label className="block text-sm font-semibold">Membership Category</label>
 //               <select
@@ -56,7 +56,7 @@
 //                 value={form.category}
 //                 onChange={handleChange}
 //                 required
-//                 className="w-full border p-3 rounded-md"
+//                 className="w-full p-3 border rounded-md"
 //               >
 //                 <option value="">Select category</option>
 //                 {categories.map((cat) => (
@@ -72,7 +72,7 @@
 //                 value={form.name}
 //                 onChange={handleChange}
 //                 required
-//                 className="w-full border p-3 rounded-md"
+//                 className="w-full p-3 border rounded-md"
 //               />
 //             </div>
 //             <div>
@@ -83,7 +83,7 @@
 //                 value={form.email}
 //                 onChange={handleChange}
 //                 required
-//                 className="w-full border p-3 rounded-md"
+//                 className="w-full p-3 border rounded-md"
 //               />
 //             </div>
 //             <div>
@@ -94,7 +94,7 @@
 //                 value={form.phone}
 //                 onChange={handleChange}
 //                 required
-//                 className="w-full border p-3 rounded-md"
+//                 className="w-full p-3 border rounded-md"
 //               />
 //             </div>
 //             <div>
@@ -105,12 +105,12 @@
 //                 value={form.chapter}
 //                 onChange={handleChange}
 //                 required
-//                 className="w-full border p-3 rounded-md"
+//                 className="w-full p-3 border rounded-md"
 //               />
 //             </div>
 //           </div>
 
-//           <div className="grid md:grid-cols-2 gap-4">
+//           <div className="grid gap-4 md:grid-cols-2">
 //             <div>
 //               <label className="block text-sm font-semibold">Passport Photo</label>
 //               <input
@@ -118,7 +118,7 @@
 //                 name="photo"
 //                 accept="image/*"
 //                 onChange={handleChange}
-//                 className="w-full border p-2 rounded-md"
+//                 className="w-full p-2 border rounded-md"
 //               />
 //             </div>
 //             <div>
@@ -128,7 +128,7 @@
 //                 name="certificate"
 //                 accept="application/pdf,image/*"
 //                 onChange={handleChange}
-//                 className="w-full border p-2 rounded-md"
+//                 className="w-full p-2 border rounded-md"
 //               />
 //             </div>
 //           </div>
@@ -166,6 +166,7 @@ const gradePricing = {
 const NewRegistration = () => {
   const navigate = useNavigate();
   const { initializePaystack } = usePaymentGateway();
+
   const [form, setForm] = useState({
     grade: "",
     fullname: "",
@@ -181,36 +182,31 @@ const NewRegistration = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setForm((prev) => ({ ...prev, [name]: files[0] }));
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
+    setForm((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const amount = gradePricing[form.grade];
-    if (!amount) {
-      alert("Please select a valid membership grade.");
-      return;
-    }
-
     setLoading(true);
     setError(null);
 
-    try {
-      // 1. Submit registration to backend
-      const payload = new FormData();
-      payload.append("grade", form.grade);
-      payload.append("fullname", form.fullname);
-      payload.append("email", form.email);
-      payload.append("phone", form.phone);
-      payload.append("chapter", form.chapter);
-      payload.append("photo", form.photo);
-      payload.append("certificate", form.certificate);
+    const amount = gradePricing[form.grade];
+    if (!amount) {
+      setLoading(false);
+      return alert("Please select a valid membership grade.");
+    }
 
-      const response = await axios.post(
+    try {
+      // Send registration data to backend
+      const payload = new FormData();
+      Object.entries(form).forEach(([key, value]) => {
+        if (value) payload.append(key, value);
+      });
+
+      const res = await axios.post(
         "https://nicengineers.com/api/members/register/",
         payload,
         {
@@ -219,8 +215,7 @@ const NewRegistration = () => {
         }
       );
 
-      if (response.status === 201 || response.status === 200) {
-        // 2. Continue to Paystack
+      if (res.status === 201 || res.status === 200) {
         const metadata = {
           fullname: form.fullname,
           grade: form.grade,
@@ -232,15 +227,15 @@ const NewRegistration = () => {
           email: form.email,
           amount,
           metadata,
-          onSuccess: () => {
-            navigate("/payment-status?status=success");
+          onSuccess: (response) => {
+            navigate(`/payment-status?status=success&ref=${response.reference}`);
           },
           onClose: () => {
             navigate("/payment-status?status=cancelled");
           },
         });
       } else {
-        throw new Error("Something went wrong.");
+        throw new Error("Failed to submit registration.");
       }
     } catch (err) {
       console.error(err);
@@ -255,16 +250,14 @@ const NewRegistration = () => {
       <div className="flex items-center justify-center px-4 py-12">
         <form
           onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-lg w-full max-w-3xl space-y-6"
+          className="w-full max-w-3xl p-8 space-y-6 bg-white shadow-lg rounded-xl"
           encType="multipart/form-data"
         >
-          <h2 className="text-2xl font-bold text-center">
-            New Member Registration
-          </h2>
+          <h2 className="text-2xl font-bold text-center">New Member Registration</h2>
 
-          {error && <p className="text-red-500 text-center text-sm">{error}</p>}
+          {error && <p className="text-sm text-center text-red-500">{error}</p>}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
               <label className="block text-sm font-semibold">Full Name</label>
               <input
@@ -272,8 +265,8 @@ const NewRegistration = () => {
                 name="fullname"
                 value={form.fullname}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
 
@@ -284,8 +277,8 @@ const NewRegistration = () => {
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
 
@@ -296,8 +289,8 @@ const NewRegistration = () => {
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
 
@@ -308,8 +301,8 @@ const NewRegistration = () => {
                 name="chapter"
                 value={form.chapter}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
 
@@ -319,8 +312,8 @@ const NewRegistration = () => {
                 name="grade"
                 value={form.grade}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               >
                 <option value="">Select Grade</option>
                 <option value="Student">Student</option>
@@ -339,8 +332,8 @@ const NewRegistration = () => {
                 name="photo"
                 accept="image/*"
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
 
@@ -351,8 +344,8 @@ const NewRegistration = () => {
                 name="certificate"
                 accept=".pdf,.jpg,.jpeg,.png"
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
           </div>
@@ -374,6 +367,7 @@ const NewRegistration = () => {
 };
 
 export default NewRegistration;
+
 
 
 // This code defines a NewRegistration component that allows users to register as new members of NICE.
