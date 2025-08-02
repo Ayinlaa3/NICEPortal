@@ -2,51 +2,42 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "@/lib/api";
 import Button from "@/components/ui/Button";
-import Footer from "@/components/Footer"; // ✅ assumed reusable
-import axios from "axios";
+import Footer from "@/components/ui/Footer";
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    regNo: "",
-    email: "",
-    phone: "",
-    firstName: "",
-    middleName: "",
-    lastName: "",
-    memberGrade: "",
-    chapter: "",
-  });
-  const [error, setError] = useState(null);
+  const [form, setForm] = useState({ regNo: "", email: "", phone: "" });
+  const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) =>
+    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(null);
-    setSuccess("");
     setLoading(true);
+    setError("");
+    setSuccess("");
 
     try {
-      const response = await axios.post("https://nicengineers.com/api/members/signup-check/", {
+      const response = await api.post("/members/signup-check/", {
         registration_number: form.regNo,
         email: form.email,
         phone: form.phone,
       });
+      console.log("Signup‑check response:", response.data);
 
       if (response.data.exists) {
-        setSuccess("Your credentials have been sent to your email.");
+        setSuccess("Credentials sent to your email.");
         setTimeout(() => navigate("/login"), 3000);
       } else {
         navigate("/new-registration");
       }
     } catch (err) {
-      console.error(err);
+      console.error("Signup error:", err.response?.data || err);
       setError("An error occurred. Please try again.");
     } finally {
       setLoading(false);
@@ -56,120 +47,47 @@ const Signup = () => {
   return (
     <div className="min-h-screen bg-[var(--background)]">
       <div className="flex items-center justify-center px-4 py-12">
-        <form
-          onSubmit={handleSubmit}
-          className="bg-white p-8 rounded-xl shadow-lg w-full max-w-2xl space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="w-full max-w-2xl p-8 space-y-6 bg-white shadow-lg rounded-xl">
           <h1 className="text-2xl font-bold text-center">Member Signup</h1>
-
-          {error && <p className="text-red-500 text-center text-sm">{error}</p>}
-          {success && <p className="text-green-600 text-center text-sm">{success}</p>}
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {error && <p className="text-sm text-center text-red-500">{error}</p>}
+          {success && <p className="text-sm text-center text-green-600">{success}</p>}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <div>
-              <label className="block text-sm font-semibold">Reg. Number</label>
+              <label>Reg. Number</label>
               <input
                 type="text"
                 name="regNo"
                 value={form.regNo}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-semibold">Email</label>
+              <label>Email</label>
               <input
                 type="email"
                 name="email"
                 value={form.email}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
+                className="w-full p-3 border rounded-md"
               />
             </div>
-
             <div>
-              <label className="block text-sm font-semibold">Phone Number</label>
+              <label>Phone Number</label>
               <input
                 type="tel"
                 name="phone"
                 value={form.phone}
                 onChange={handleChange}
-                className="w-full border p-3 rounded-md"
                 required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Member Grade</label>
-              <select
-                name="memberGrade"
-                value={form.memberGrade}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-md"
-                required
-              >
-                <option value="">Select grade</option>
-                <option value="Student">Student</option>
-                <option value="Graduate">Graduate</option>
-                <option value="Associate">Associate</option>
-                <option value="Member">Member</option>
-                <option value="Fellow">Fellow</option>
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">First Name</label>
-              <input
-                type="text"
-                name="firstName"
-                value={form.firstName}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Middle Name</label>
-              <input
-                type="text"
-                name="middleName"
-                value={form.middleName}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Last Name</label>
-              <input
-                type="text"
-                name="lastName"
-                value={form.lastName}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Chapter</label>
-              <input
-                type="text"
-                name="chapter"
-                value={form.chapter}
-                onChange={handleChange}
-                className="w-full border p-3 rounded-md"
-                required
+                className="w-full p-3 border rounded-md"
               />
             </div>
           </div>
-
           <Button type="submit" className="w-full" disabled={loading}>
-            {loading ? "Checking..." : "Continue"}
+            {loading ? "Please wait..." : "Continue"}
           </Button>
         </form>
       </div>
@@ -179,6 +97,7 @@ const Signup = () => {
 };
 
 export default Signup;
+
 
 
 

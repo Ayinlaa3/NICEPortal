@@ -1,28 +1,18 @@
-// // src/pages/public/Login.jsx
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { login as loginAPI } from "@/lib/auth";
 import { useAuth } from "@/hooks/useAuth";
+import api from "@/lib/api";
 import Button from "@/components/ui/Button";
 
 const Login = () => {
   const navigate = useNavigate();
   const { login: setAuthUser } = useAuth();
-
-  const [formData, setFormData] = useState({
-    emailOrID: "",
-    password: "",
-  });
-
+  const [formData, setFormData] = useState({ emailOrID: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const handleChange = (e) =>
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,21 +21,18 @@ const Login = () => {
 
     try {
       const isEmail = formData.emailOrID.includes("@");
-
       const payload = isEmail
         ? { email: formData.emailOrID, password: formData.password }
         : { membership_id: formData.emailOrID, password: formData.password };
 
-      const response = await loginAPI(payload);
+      const response = await api.post("/login/", payload);
+      console.log("Login response:", response.data);
       setAuthUser(response.data);
 
-      if (response.data.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/dashboard");
-      }
+      if (response.data.role === "admin") navigate("/admin");
+      else navigate("/dashboard");
     } catch (err) {
-      console.error(err);
+      console.error("Login error:", err.response?.data || err);
       setError("Invalid login credentials");
     } finally {
       setLoading(false);
@@ -54,20 +41,11 @@ const Login = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white p-8 shadow-md rounded-xl w-full max-w-md space-y-4"
-      >
-        <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
-          Member Login
-        </h2>
-
+      <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-xl w-full max-w-md space-y-4">
+        <h2 className="text-2xl font-bold text-center text-[var(--primary)]">Member Login</h2>
         {error && <p className="text-red-600 text-sm">{error}</p>}
-
         <div>
-          <label className="block text-sm font-medium">
-            Email or Membership ID
-          </label>
+          <label>Email or Membership ID</label>
           <input
             type="text"
             name="emailOrID"
@@ -77,9 +55,8 @@ const Login = () => {
             className="w-full mt-1 p-2 border rounded-md"
           />
         </div>
-
         <div>
-          <label className="block text-sm font-medium">Password</label>
+          <label>Password</label>
           <input
             type="password"
             name="password"
@@ -89,36 +66,24 @@ const Login = () => {
             className="w-full mt-1 p-2 border rounded-md"
           />
         </div>
-
         <div className="text-right text-sm">
-          <Link
-            to="/forgot-password"
-            className="text-[var(--primary)] hover:underline"
-          >
+          <Link to="/forgot-password" className="text-[var(--primary)] hover:underline">
             Forgot password?
           </Link>
         </div>
-
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
-
-        <div className="text-sm text-center text-gray-700 space-y-1">
+        <div className="text-sm text-center text-gray-700 mt-2 space-y-1">
           <p>
-            Are you a NICE Member with no credentials?{" "}
-            <Link
-              to="/signup"
-              className="text-[var(--primary)] font-medium hover:underline"
-            >
+            NICE Member without credentials?{" "}
+            <Link to="/signup" className="text-[var(--primary)] font-medium hover:underline">
               Signup here
             </Link>
           </p>
           <p>
-            Not a NICE Member?{" "}
-            <Link
-              to="/new-registration"
-              className="text-[var(--primary)] font-medium hover:underline"
-            >
+            New member?{" "}
+            <Link to="/new-registration" className="text-[var(--primary)] font-medium hover:underline">
               Register here
             </Link>
           </p>
@@ -129,6 +94,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 

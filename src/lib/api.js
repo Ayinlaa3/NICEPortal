@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 
-const instance = axios.create({
-  baseURL: 'https://nicengineers.com/api',
+const api = axios.create({
+  baseURL: "https://nicengineers.com/api",
   withCredentials: true,
 });
 
-export default instance;
+export default api;
 
 
 
