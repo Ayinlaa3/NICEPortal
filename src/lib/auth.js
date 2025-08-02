@@ -1,5 +1,4 @@
 import axios from './api';
-// import axios from "axios";
 
 const BASE_URL = "https://nicengineers.com/api";
 

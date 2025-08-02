@@ -145,7 +145,6 @@
 
 // export default NewRegistration;
 
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
@@ -180,16 +179,16 @@ const NewRegistration = () => {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    if (files) {
-      setForm((prev) => ({ ...prev, [name]: files[0] }));
-    } else {
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
+    setForm((prev) => ({
+      ...prev,
+      [name]: files ? files[0] : value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const amount = gradePricing[form.grade];
+
     if (!amount) {
       alert("Please select a valid membership grade.");
       return;
@@ -200,19 +199,17 @@ const NewRegistration = () => {
 
     try {
       const payload = new FormData();
-      payload.append("grade", form.grade);
-      payload.append("fullname", form.fullname);
-      payload.append("email", form.email);
-      payload.append("phone", form.phone);
-      payload.append("chapter", form.chapter);
-      payload.append("photo", form.photo);
-      payload.append("certificate", form.certificate);
+      Object.entries(form).forEach(([key, value]) => {
+        payload.append(key, value);
+      });
 
       const response = await axios.post(
         "https://nicengineers.com/api/members/register/",
         payload,
         {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
           withCredentials: true,
         }
       );
@@ -237,7 +234,7 @@ const NewRegistration = () => {
           },
         });
       } else {
-        throw new Error("Something went wrong.");
+        throw new Error("Unexpected response status");
       }
     } catch (err) {
       console.error(err);
@@ -262,53 +259,10 @@ const NewRegistration = () => {
           {error && <p className="text-sm text-center text-red-500">{error}</p>}
 
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            <div>
-              <label className="block text-sm font-semibold">Full Name</label>
-              <input
-                type="text"
-                name="fullname"
-                value={form.fullname}
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Email</label>
-              <input
-                type="email"
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Phone Number</label>
-              <input
-                type="tel"
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Chapter</label>
-              <input
-                type="text"
-                name="chapter"
-                value={form.chapter}
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
+            <Input label="Full Name" name="fullname" value={form.fullname} onChange={handleChange} />
+            <Input label="Email" type="email" name="email" value={form.email} onChange={handleChange} />
+            <Input label="Phone Number" name="phone" value={form.phone} onChange={handleChange} />
+            <Input label="Chapter" name="chapter" value={form.chapter} onChange={handleChange} />
 
             <div>
               <label className="block text-sm font-semibold">Grade</label>
@@ -329,29 +283,8 @@ const NewRegistration = () => {
               </select>
             </div>
 
-            <div>
-              <label className="block text-sm font-semibold">Passport Photo</label>
-              <input
-                type="file"
-                name="photo"
-                accept="image/*"
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-semibold">Upload Certificate</label>
-              <input
-                type="file"
-                name="certificate"
-                accept=".pdf,.jpg,.jpeg,.png"
-                onChange={handleChange}
-                className="w-full p-3 border rounded-md"
-                required
-              />
-            </div>
+            <Input label="Passport Photo" name="photo" type="file" accept="image/*" onChange={handleChange} />
+            <Input label="Upload Certificate" name="certificate" type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={handleChange} />
           </div>
 
           <Button type="submit" className="w-full" disabled={loading}>
@@ -370,7 +303,21 @@ const NewRegistration = () => {
   );
 };
 
+// Reusable input component
+const Input = ({ label, type = "text", ...props }) => (
+  <div>
+    <label className="block text-sm font-semibold">{label}</label>
+    <input
+      type={type}
+      {...props}
+      className="w-full p-3 border rounded-md"
+      required={type !== "file" || !props.optional}
+    />
+  </div>
+);
+
 export default NewRegistration;
+
 
 
 
