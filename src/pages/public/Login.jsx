@@ -77,7 +77,7 @@ const Login = () => {
         <div className="mt-2 space-y-1 text-sm text-center text-gray-700">
           <p>
             Visiting for the first time?{" "}
-            <Link to="/registration" className="text-[var(--primary)] font-medium hover:underline">
+            <Link to="/register" className="text-[var(--primary)] font-medium hover:underline">
               Register here
             </Link>
           </p>

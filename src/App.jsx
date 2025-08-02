@@ -4,6 +4,7 @@ import Login from "@/pages/public/Login";
 import ForgotPassword from "@/pages/public/ForgotPassword";
 import Signup from "@/pages/public/Signup";
 import Register from "@/pages/public/Register";
+import RegistrationSuccess from "@/pages/public/RegistrationSuccess";
 import PaymentStatus from "@/pages/public/PaymentStatus";
 import Dashboard from "@/pages/member/Dashboard";
 import Profile from "@/pages/member/Profile";
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/registration-success" element={<RegistrationSuccess />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
 
         {/* Member Dashboard */}

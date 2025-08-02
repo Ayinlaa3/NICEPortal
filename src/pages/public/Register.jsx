@@ -1,44 +1,54 @@
-
 // src/pages/public/Register.jsx
 
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "@/components/ui/Button";
 import Footer from "@/components/Footer";
 import axios from "axios";
 
+const gradeOptions = ["Fellow", "Member", "Associate", "Graduate", "Student"];
+
+const prefixOptions = ["Engr.", "Dr.", "Prof.", "Chief.", "Mr.", "Mrs.", "Miss"];
+
+const chapterOptions = [
+  "Kano", "Katsina", "Abuja", "Dutse", "Uyo", "Owerri", "Ekiti", "Enugu", "Ogun", "Warri",
+  "Adamawa", "Lagos", "Jos", "Akure", "Benin", "Calabar", "Port Harcourt", "Yenagoa",
+  "Awka", "Maiduguri", "Kaduna", "Bonny", "Janligo", "Abakaliki", "Bauchi", "Asaba",
+  "Osun", "Markudi", "Yobe", "Ibadan", "Gombe", "Minna"
+];
+
+const stateOptions = [
+  "Abia", "Adamawa", "Akwa Ibom", "Anambra", "Bauchi", "Bayelsa", "Benue", "Borno", "Cross River",
+  "Delta", "Ebonyi", "Edo", "Ekiti", "Enugu", "FCT", "Gombe", "Imo", "Jigawa", "Kaduna", "Kano",
+  "Katsina", "Kebbi", "Kogi", "Kwara", "Lagos", "Nasarawa", "Niger", "Ogun", "Ondo", "Osun",
+  "Oyo", "Plateau", "Rivers", "Sokoto", "Taraba", "Yobe", "Zamfara"
+];
+
+const countryOptions = ["Nigeria"];
+
 const Register = () => {
   const navigate = useNavigate();
   const [form, setForm] = useState({
-    email: "",
-    password: "",
     first_name: "",
     last_name: "",
     middle_name: "",
-    full_name: "",
-    member_grade: "",
-    application_date: new Date().toISOString().split("T")[0],
-    address: "",
-    nse_reg_no: "",
-    nice_reg_no: "",
-    phone_fax: "",
-    member_status: "",
-    membership_id: "",
-    name_credentials: "",
     name_prefix: "",
+    name_credentials: "",
+    email: "",
+    password: "",
+    primary_phone: "",
+    phone_fax: "",
+    member_grade: "",
+    chapter: "",
+    nice_reg_no: "",
+    nse_reg_no: "",
+    address: "",
     city: "",
     state: "",
     country_name: "",
-    primary_phone: "",
-    chapter: "",
-    status: "inactive",
-    is_approved: false,
-    role: "member",
-    groups: [],
-    user_permissions: [],
   });
+
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
@@ -50,97 +60,154 @@ const Register = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    setSuccess(null);
+
     try {
-      const response = await axios.post(
-        "https://nicengineers.com/api/members/register/",
-        form,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      );
+      const response = await axios.post("https://nicengineers.com/api/member/register/", {
+        ...form,
+        membership_id: form.nice_reg_no || "temp-id", // fallback ID
+        is_approved: false,
+        role: "member",
+        groups: [],
+        user_permissions: [],
+      });
 
       if (response.status === 201 || response.status === 200) {
-        setSuccess("Registration successful! Login details have been sent to your email.");
-        setTimeout(() => navigate("/login"), 3000);
+        navigate("/registration-success");
       } else {
-        throw new Error("Unexpected server response");
+        throw new Error("Unexpected response status");
       }
     } catch (err) {
       console.error(err);
-      setError("Registration failed. Please check your input or try again later.");
+      setError("Registration failed. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {error && <p className="text-sm text-center text-red-500">{error}</p>}
-        {success && <p className="text-sm text-center text-green-600">{success}</p>}
+    <div className="min-h-screen bg-[var(--background)]">
+      <div className="flex items-center justify-center px-4 py-12">
+        <form
+          onSubmit={handleSubmit}
+          className="w-full max-w-3xl p-8 space-y-6 bg-white shadow-lg rounded-xl"
+        >
+          <h2 className="text-2xl font-bold text-center">Create Account</h2>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {[
-            ["first_name", "First Name"],
-            ["last_name", "Last Name"],
-            ["middle_name", "Middle Name"],
-            ["full_name", "Full Name"],
-            ["email", "Email", "email"],
-            ["password", "Password", "password"],
-            ["membership_id", "Membership ID"],
-            ["member_grade", "Member Grade"],
-            ["chapter", "Chapter"],
-            ["primary_phone", "Primary Phone"],
-            ["nse_reg_no", "NSE Reg. No."],
-            ["nice_reg_no", "NICE Reg. No."],
-            ["name_prefix", "Name Prefix"],
-            ["name_credentials", "Name Credentials"],
-            ["member_status", "Member Status"],
-            ["phone_fax", "Phone Fax"],
-            ["address", "Address"],
-            ["city", "City"],
-            ["state", "State"],
-            ["country_name", "Country"],
-          ].map(([name, label, type = "text"]) => (
-            <Input
-              key={name}
-              label={label}
-              name={name}
-              type={type}
-              value={form[name]}
+          <p className="text-sm text-center text-gray-700">
+            Please fill in the required details to register as a member. Fields marked with * are mandatory. Your login credentials will be sent immediately after submission.
+          </p>
+
+          {error && <p className="text-sm text-center text-red-500">{error}</p>}
+
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <Input label="First Name*" name="first_name" value={form.first_name} onChange={handleChange} required />
+            <Input label="Last Name*" name="last_name" value={form.last_name} onChange={handleChange} required />
+            <Input label="Middle Name" name="middle_name" value={form.middle_name} onChange={handleChange} />
+
+            <Select
+              label="Name Prefix"
+              name="name_prefix"
+              options={prefixOptions}
+              value={form.name_prefix}
               onChange={handleChange}
             />
-          ))}
-        </div>
+            <Input label="Name Credentials (e.g. FNSE, MNICE)" name="name_credentials" value={form.name_credentials} onChange={handleChange} />
+            <Input label="Email*" type="email" name="email" value={form.email} onChange={handleChange} required />
+            <Input label="Password* (min 6 chars)" type="password" name="password" value={form.password} onChange={handleChange} required pattern=".{6,}" />
+            <Input label="Primary Phone*" name="primary_phone" value={form.primary_phone} onChange={handleChange} required />
+            <Input label="Other Phone" name="phone_fax" value={form.phone_fax} onChange={handleChange} />
 
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Submitting..." : "Submit Registration"}
-        </Button>
-      </form>
+            <Select
+              label="NICE Membership Grade*"
+              name="member_grade"
+              options={gradeOptions}
+              value={form.member_grade}
+              onChange={handleChange}
+              required
+            />
+            <Select
+              label="NICE Chapter"
+              name="chapter"
+              options={chapterOptions}
+              value={form.chapter}
+              onChange={handleChange}
+            />
+
+            <Input label="NICE Reg. No. (if applicable)" name="nice_reg_no" value={form.nice_reg_no} onChange={handleChange} />
+            <Input label="NSE Reg. No. (if applicable)" name="nse_reg_no" value={form.nse_reg_no} onChange={handleChange} />
+
+            <Input label="Address*" name="address" value={form.address} onChange={handleChange} required />
+            <Input label="City*" name="city" value={form.city} onChange={handleChange} required />
+            <Select
+              label="State*"
+              name="state"
+              options={stateOptions}
+              value={form.state}
+              onChange={handleChange}
+              required
+            />
+            <Select
+              label="Country*"
+              name="country_name"
+              options={countryOptions}
+              value={form.country_name}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <Button type="submit" className="w-full" disabled={loading}>
+            {loading ? "Registering..." : "Submit Registration"}
+          </Button>
+
+          <div className="mt-2 text-sm text-center">
+            Already registered?{" "}
+            <Link to="/" className="text-[var(--primary)] font-medium hover:underline">
+              Back to Login
+            </Link>
+          </div>
+        </form>
+      </div>
       <Footer />
     </div>
   );
 };
 
-const Input = ({ label, type = "text", ...props }) => (
-  <div className="flex flex-col">
-    <label htmlFor={props.name} className="mb-1 text-sm font-medium">
-      {label}
-    </label>
+const Input = ({ label, type = "text", required, pattern, ...props }) => (
+  <div>
+    <label className="block text-sm font-semibold">{label}</label>
     <input
-      id={props.name}
       type={type}
+      required={required}
+      pattern={pattern}
       {...props}
-      className="p-2 border rounded-md"
+      className="w-full p-3 border rounded-md"
     />
   </div>
 );
 
+const Select = ({ label, name, options, value, onChange, required }) => (
+  <div>
+    <label className="block text-sm font-semibold">{label}</label>
+    <select
+      name={name}
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="w-full p-3 border rounded-md"
+    >
+      <option value="">Select {label}</option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
 export default Register;
+
 
 
 
