@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "@/lib/api";
 import Button from "@/components/ui/Button";
-import Footer from "@/components/ui/Footer";
+import Footer from "@/components/Footer";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ const Signup = () => {
         setSuccess("Credentials sent to your email.");
         setTimeout(() => navigate("/login"), 3000);
       } else {
-        navigate("/new-registration");
+        navigate("/register");
       }
     } catch (err) {
       console.error("Signup error:", err.response?.data || err);

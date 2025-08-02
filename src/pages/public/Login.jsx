@@ -40,10 +40,10 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <form onSubmit={handleSubmit} className="bg-white p-8 shadow-md rounded-xl w-full max-w-md space-y-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-50">
+      <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl">
         <h2 className="text-2xl font-bold text-center text-[var(--primary)]">Member Login</h2>
-        {error && <p className="text-red-600 text-sm">{error}</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
         <div>
           <label>Email or Membership ID</label>
           <input
@@ -52,7 +52,7 @@ const Login = () => {
             required
             value={formData.emailOrID}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border rounded-md"
+            className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
         <div>
@@ -63,10 +63,10 @@ const Login = () => {
             required
             value={formData.password}
             onChange={handleChange}
-            className="w-full mt-1 p-2 border rounded-md"
+            className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
-        <div className="text-right text-sm">
+        <div className="text-sm text-right">
           <Link to="/forgot-password" className="text-[var(--primary)] hover:underline">
             Forgot password?
           </Link>
@@ -74,16 +74,10 @@ const Login = () => {
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
-        <div className="text-sm text-center text-gray-700 mt-2 space-y-1">
+        <div className="mt-2 space-y-1 text-sm text-center text-gray-700">
           <p>
-            NICE Member without credentials?{" "}
-            <Link to="/signup" className="text-[var(--primary)] font-medium hover:underline">
-              Signup here
-            </Link>
-          </p>
-          <p>
-            New member?{" "}
-            <Link to="/new-registration" className="text-[var(--primary)] font-medium hover:underline">
+            Visiting for the first time?{" "}
+            <Link to="/registration" className="text-[var(--primary)] font-medium hover:underline">
               Register here
             </Link>
           </p>

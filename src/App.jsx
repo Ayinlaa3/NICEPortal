@@ -3,7 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Login from "@/pages/public/Login";
 import ForgotPassword from "@/pages/public/ForgotPassword";
 import Signup from "@/pages/public/Signup";
-import NewRegistration from "@/pages/public/NewRegistration";
+import Register from "@/pages/public/Register";
 import PaymentStatus from "@/pages/public/PaymentStatus";
 import Dashboard from "@/pages/member/Dashboard";
 import Profile from "@/pages/member/Profile";
@@ -23,7 +23,7 @@ const App = () => {
         <Route path="/" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/new-registration" element={<NewRegistration />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
 
         {/* Member Dashboard */}
