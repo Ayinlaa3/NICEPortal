@@ -20,7 +20,7 @@ export const logout = async () => {
 };
 
 export const checkAuthStatus = async () => {
-  return axios.get('/auth/user/', { withCredentials: true });
+  return axios.get('/member/info/', { withCredentials: true });
 };
 
 export const registerMember = async (data) => {

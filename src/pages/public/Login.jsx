@@ -28,7 +28,7 @@ const Login = () => {
       await api.post("/login/", payload, { withCredentials: true });
 
       // Fetch the user after successful login
-      const { data: userData } = await api.get("/user/", {
+      const { data: userData } = await api.get("/member/info/", {
         withCredentials: true,
       });
 
