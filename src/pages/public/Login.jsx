@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: setAuthUser } = useAuth();
+  const { login: setUser } = useAuth();
   const [formData, setFormData] = useState({ emailOrID: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,15 +25,20 @@ const Login = () => {
         ? { email: formData.emailOrID, password: formData.password }
         : { membership_id: formData.emailOrID, password: formData.password };
 
-      const response = await api.post("/login/", payload);
-      console.log("Login response:", response.data);
-      setAuthUser(response.data);
+      await api.post("/login/", payload, { withCredentials: true });
 
-      if (response.data.role === "admin") navigate("/admin");
+      // Fetch the user after successful login
+      const { data: userData } = await api.get("/auth/user/", {
+        withCredentials: true,
+      });
+
+      setUser(userData);
+
+      if (userData.role === "admin") navigate("/admin");
       else navigate("/dashboard");
     } catch (err) {
       console.error("Login error:", err.response?.data || err);
-      setError("Invalid login credentials");
+      setError("Invalid login credentials. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -41,9 +46,16 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <form onSubmit={handleSubmit} className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl">
-        <h2 className="text-2xl font-bold text-center text-[var(--primary)]">Member Login</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl"
+      >
+        <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
+          Member Login
+        </h2>
+
         {error && <p className="text-sm text-red-600">{error}</p>}
+
         <div>
           <label>Email or Membership ID</label>
           <input
@@ -55,6 +67,7 @@ const Login = () => {
             className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
+
         <div>
           <label>Password</label>
           <input
@@ -66,18 +79,27 @@ const Login = () => {
             className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
+
         <div className="text-sm text-right">
-          <Link to="/forgot-password" className="text-[var(--primary)] hover:underline">
+          <Link
+            to="/forgot-password"
+            className="text-[var(--primary)] hover:underline"
+          >
             Forgot password?
           </Link>
         </div>
+
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
+
         <div className="mt-2 space-y-1 text-sm text-center text-gray-700">
           <p>
             Visiting for the first time?{" "}
-            <Link to="/register" className="text-[var(--primary)] font-medium hover:underline">
+            <Link
+              to="/register"
+              className="text-[var(--primary)] font-medium hover:underline"
+            >
               Register here
             </Link>
           </p>
@@ -88,6 +110,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 
