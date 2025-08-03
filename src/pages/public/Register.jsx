@@ -94,7 +94,7 @@ const Register = () => {
           <h2 className="text-2xl font-bold text-center">Create Account</h2>
 
           <p className="text-sm text-center text-gray-700">
-            Please fill in the required details to register as a member. Fields marked with * are mandatory. Your login credentials will be sent immediately after submission.
+            Please fill in the required details to register on the NICE Portal. Fields marked with * are mandatory. Your login credentials will be sent to your email immediately after submission.
           </p>
 
           {error && <p className="text-sm text-center text-red-500">{error}</p>}
