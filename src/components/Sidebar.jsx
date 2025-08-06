@@ -6,9 +6,12 @@ import clsx from "clsx";
 const navItems = {
   member: [
     { label: "Dashboard", path: "/dashboard" },
-    { label: "Profile", path: "/profile" },
-    { label: "Uploads", path: "/uploads" },
+    { label: "Profile Information", path: "/member/profile" },
+    { label: "Professional Development", path: "/member/professional-development" },
+    { label: "Membership Details", path: "/member/membership-details" },
+    { label: "Password Management", path: "/member/password-management" },
     { label: "Payment History", path: "/payment-history" },
+    { label: "Uploads", path: "/uploads" },
   ],
   admin: [
     { label: "Dashboard", path: "/admin" },
@@ -25,7 +28,7 @@ const Sidebar = () => {
   const role = user?.role || "member";
 
   return (
-    <aside className="min-h-screen w-64 border-r bg-white px-4 py-6 hidden md:block">
+    <aside className="hidden w-64 min-h-screen px-4 py-6 bg-white border-r md:block">
       <h2 className="text-xl font-bold text-[var(--primary)] mb-6">
         NICE {role === "admin" ? "Admin" : "Member"} Panel
       </h2>

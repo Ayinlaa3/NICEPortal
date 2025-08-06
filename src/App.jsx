@@ -10,6 +10,11 @@ import Dashboard from "@/pages/member/Dashboard";
 import Profile from "@/pages/member/Profile";
 import Uploads from "@/pages/member/Uploads";
 import PaymentHistory from "@/pages/member/PaymentHistory";
+import ProfileInformation from "@/pages/member/ProfileInformation";
+import MembershipDetails from "@/pages/member/MembershipDetails";
+import PasswordManagement from "@/pages/member/PasswordManagement";
+import ProfessionalDevelopment from "@/pages/member/ProfessionalDevelopment";
+
 import AdminDashboard from "@/pages/admin/AdminDashboard";
 import MemberDetail from "@/pages/admin/MemberDetail";
 import Approvals from "@/pages/admin/Approvals";
@@ -27,6 +32,11 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/registration-success" element={<RegistrationSuccess />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
+        <Route path="/member/profile" element={<ProfileInformation />} />
+        <Route path="/member/password-management" element={<PasswordManagement />} />
+        <Route path="/member/membership-details" element={<MembershipDetails />} />
+        <Route path="/member/professional-development" element={<ProfessionalDevelopment />} />
+
 
         {/* Member Dashboard */}
         <Route
@@ -44,6 +54,22 @@ const App = () => {
         <Route
           path="/payment-history"
           element={<ProtectedRoute role="member"><PaymentHistory /></ProtectedRoute>}
+        />
+        <Route 
+        path="/member/profile" 
+        element={<ProtectedRoute role="member"><ProfileInformation /></ProtectedRoute>} 
+        />
+        <Route 
+        path="/member/password-management" 
+        element={<ProtectedRoute role="member"><PasswordManagement /></ProtectedRoute>} 
+        />
+        <Route 
+        path="/member/membership-details" 
+        element={<ProtectedRoute role="member"><MembershipDetails /></ProtectedRoute>} 
+        />
+        <Route 
+        path="/member/professional-development" 
+        element={<ProtectedRoute role="member"><ProfessionalDevelopment /></ProtectedRoute>} 
         />
 
         {/* Admin Routes */}

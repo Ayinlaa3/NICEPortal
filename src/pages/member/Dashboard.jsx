@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import RoleBasedLayout from "@/components/RoleBasedLayout";
 import Button from "@/components/ui/Button";
 import { getMemberInfo } from "@/lib/member";
-import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [member, setMember] = useState(null);
@@ -52,26 +51,17 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Quick Navigation */}
-        <div className="p-6 space-y-4 bg-white shadow-md rounded-xl">
-          <h2 className="mb-2 text-lg font-semibold">Quick Actions</h2>
-          <Link to="/member/profile">
-            <Button className="w-full">Edit Profile Information</Button>
-          </Link>
-          <Link to="/member/professional-development">
-            <Button className="w-full">Professional Development</Button>
-          </Link>
-          <Link to="/member/membership-details">
-            <Button className="w-full">Membership Details</Button>
-          </Link>
-          <Link to="/member/payment-history">
-            <Button className="w-full">Payment History</Button>
-          </Link>
-          <Link to="/member/password-management">
-            <Button type="secondary" className="w-full">
-              Change Password
-            </Button>
-          </Link>
+        {/* Profile Picture + ID Card/Certificate Download */}
+        <div className="flex flex-col items-center justify-center p-6 space-y-4 bg-white shadow-md rounded-xl">
+          <div className="w-24 h-24 overflow-hidden border rounded-full">
+            <img
+              src={member?.photo || "/default-avatar.png"}
+              alt="Profile"
+              className="object-cover w-full h-full"
+            />
+          </div>
+          <Button className="w-full">Download ID Card</Button>
+          <Button type="secondary" className="w-full">Download Certificate</Button>
         </div>
 
         {/* Profile Summary */}
