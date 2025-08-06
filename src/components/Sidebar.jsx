@@ -2,23 +2,32 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import clsx from "clsx";
+import {
+  UserCircle,
+  BookOpen,
+  BadgeCheck,
+  Lock,
+  CreditCard,
+  UploadCloud,
+  LayoutDashboard,
+} from "lucide-react";
 
 const navItems = {
   member: [
-    { label: "Dashboard", path: "/dashboard" },
-    { label: "Profile Information", path: "/member/profile" },
-    { label: "Professional Development", path: "/member/professional-development" },
-    { label: "Membership Details", path: "/member/membership-details" },
-    { label: "Password Management", path: "/member/password-management" },
-    { label: "Payment History", path: "/payment-history" },
-    { label: "Uploads", path: "/uploads" },
+    { label: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+    { label: "Profile Information", path: "/member/profile", icon: UserCircle },
+    { label: "Professional Development", path: "/member/professional-development", icon: BookOpen },
+    { label: "Membership Details", path: "/member/membership-details", icon: BadgeCheck },
+    { label: "Password Management", path: "/member/password-management", icon: Lock },
+    { label: "Payment History", path: "/payment-history", icon: CreditCard },
+    { label: "Uploads", path: "/uploads", icon: UploadCloud },
   ],
   admin: [
-    { label: "Dashboard", path: "/admin" },
-    { label: "Approvals", path: "/admin/approvals" },
-    { label: "Members", path: "/admin/members/1" },
-    { label: "Payments", path: "/admin/payments" },
-    { label: "Reports", path: "/admin/reports" },
+    { label: "Dashboard", path: "/admin", icon: LayoutDashboard },
+    { label: "Approvals", path: "/admin/approvals", icon: BadgeCheck },
+    { label: "Members", path: "/admin/members/1", icon: UserCircle },
+    { label: "Payments", path: "/admin/payments", icon: CreditCard },
+    { label: "Reports", path: "/admin/reports", icon: BookOpen },
   ],
 };
 
@@ -32,19 +41,20 @@ const Sidebar = () => {
       <h2 className="text-xl font-bold text-[var(--primary)] mb-6">
         NICE {role === "admin" ? "Admin" : "Member"} Panel
       </h2>
-      <nav className="space-y-2">
-        {navItems[role]?.map((item) => (
+      <nav className="space-y-1">
+        {navItems[role]?.map(({ label, path, icon: Icon }) => (
           <Link
-            key={item.path}
-            to={item.path}
+            key={path}
+            to={path}
             className={clsx(
-              "block px-4 py-2 rounded-md font-medium",
-              pathname === item.path
-                ? "bg-[var(--primary)] text-white"
+              "flex items-center gap-3 px-4 py-2 rounded-md font-medium transition-colors",
+              pathname === path
+                ? "bg-[var(--primary)] text-white shadow-md"
                 : "hover:bg-[var(--accent)] text-gray-800"
             )}
           >
-            {item.label}
+            <Icon size={18} />
+            {label}
           </Link>
         ))}
       </nav>
