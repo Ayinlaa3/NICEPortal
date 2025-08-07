@@ -2,29 +2,27 @@
 
 import api from "./api";
 
+// Get all members
 export const getAllMembers = async () => {
   const res = await api.get("/admin/members-list/");
   return res.data;
 };
 
+// Approve a member
 export const approveMember = async (id) => {
-  return await api.post(`/admin/member-approval/${id}/`);
+  const res = await api.post(`/admin/member-approval/${id}/`);
+  return res.data;
 };
 
+// Delete a member
 export const deleteMember = async (id) => {
-  return await api.delete(`/admin/delete-member/${id}/`);
-};
-
-
-// Fetch all members
-export const fetchAllMembers = async () => {
-  const response = await API.get("/admin/members-list/");
-  return response.data;
+  const res = await api.delete(`/admin/delete-member/${id}/`);
+  return res.data;
 };
 
 // Search members
 export const searchMembers = async (query) => {
-  const response = await API.get(`/member-search/${query}/`);
-  return response.data;
+  const res = await api.get(`/member-search/${query}/`);
+  return res.data;
 };
 

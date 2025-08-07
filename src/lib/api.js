@@ -7,19 +7,22 @@ const api = axios.create({
 
 export default api;
 
+// Dashboard Summary
 export const getDashboardSummary = async () => {
-  const res = await fetch("/api/admin/dashboard-summary/");
-  return await res.json();
+  const res = await api.get("/admin/dashboard-summary/");
+  return res.data;
 };
 
+// Members by Chapter
 export const getChapterData = async () => {
-  const res = await fetch("/api/admin/members-by-chapter/");
-  return await res.json();
+  const res = await api.get("/admin/members-by-chapter/");
+  return res.data;
 };
 
+// Members by Grade
 export const getGradeData = async () => {
-  const res = await fetch("/api/admin/members-by-grade/");
-  return await res.json();
+  const res = await api.get("/admin/members-by-grade/");
+  return res.data;
 };
 
 

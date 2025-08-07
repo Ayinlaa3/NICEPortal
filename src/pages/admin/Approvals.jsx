@@ -1,7 +1,7 @@
 // src/pages/admin/Approvals.jsx
 
 import React, { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
+import Button from "@/components/ui/button";
 import { getAllMembers, approveMember, deleteMember } from "@/lib/admin";
 import { Loader, CheckCircle, XCircle } from "lucide-react";
 import Modal from "@/components/ui/Modal"; // Modal we added earlier
@@ -55,17 +55,17 @@ const Approvals = () => {
 
   return (
     <div className="p-4 md:p-6">
-      <h2 className="text-2xl font-bold mb-4">Pending Member Approvals</h2>
+      <h2 className="mb-4 text-2xl font-bold">Pending Member Approvals</h2>
 
       {loading ? (
         <div className="flex justify-center mt-10">
-          <Loader className="animate-spin w-10 h-10" />
+          <Loader className="w-10 h-10 animate-spin" />
         </div>
       ) : pendingMembers.length === 0 ? (
         <div className="text-center text-gray-500">No pending approvals</div>
       ) : (
-        <div className="overflow-x-auto rounded-lg border shadow-sm">
-          <table className="min-w-full table-auto text-sm">
+        <div className="overflow-x-auto border rounded-lg shadow-sm">
+          <table className="min-w-full text-sm table-auto">
             <thead className="bg-gray-100">
               <tr>
                 <th className="px-4 py-2 text-left">Name</th>
