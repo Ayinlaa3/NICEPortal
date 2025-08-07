@@ -20,6 +20,10 @@ import MemberDetail from "@/pages/admin/MemberDetail";
 import Approvals from "@/pages/admin/Approvals";
 import Payments from "@/pages/admin/Payments";
 import Reports from "@/pages/admin/Reports";
+import Roles from "@/pages/admin/Roles";
+import Settings from "@/pages/admin/Settings";
+import Members from "@/pages/admin/Members";
+
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 const App = () => {
@@ -32,67 +36,26 @@ const App = () => {
         <Route path="/register" element={<Register />} />
         <Route path="/registration-success" element={<RegistrationSuccess />} />
         <Route path="/payment-status" element={<PaymentStatus />} />
-        <Route path="/member/profile" element={<ProfileInformation />} />
-        <Route path="/member/password-management" element={<PasswordManagement />} />
-        <Route path="/member/membership-details" element={<MembershipDetails />} />
-        <Route path="/member/professional-development" element={<ProfessionalDevelopment />} />
-
 
         {/* Member Dashboard */}
-        <Route
-          path="/dashboard"
-          element={<ProtectedRoute role="member"><Dashboard /></ProtectedRoute>}
-        />
-        <Route
-          path="/profile"
-          element={<ProtectedRoute role="member"><Profile /></ProtectedRoute>}
-        />
-        <Route
-          path="/uploads"
-          element={<ProtectedRoute role="member"><Uploads /></ProtectedRoute>}
-        />
-        <Route
-          path="/payment-history"
-          element={<ProtectedRoute role="member"><PaymentHistory /></ProtectedRoute>}
-        />
-        <Route 
-        path="/member/profile" 
-        element={<ProtectedRoute role="member"><ProfileInformation /></ProtectedRoute>} 
-        />
-        <Route 
-        path="/member/password-management" 
-        element={<ProtectedRoute role="member"><PasswordManagement /></ProtectedRoute>} 
-        />
-        <Route 
-        path="/member/membership-details" 
-        element={<ProtectedRoute role="member"><MembershipDetails /></ProtectedRoute>} 
-        />
-        <Route 
-        path="/member/professional-development" 
-        element={<ProtectedRoute role="member"><ProfessionalDevelopment /></ProtectedRoute>} 
-        />
+        <Route path="/dashboard" element={<ProtectedRoute role="member"><Dashboard /></ProtectedRoute>} />
+        <Route path="/profile" element={<ProtectedRoute role="member"><Profile /></ProtectedRoute>} />
+        <Route path="/uploads" element={<ProtectedRoute role="member"><Uploads /></ProtectedRoute>} />
+        <Route path="/payment-history" element={<ProtectedRoute role="member"><PaymentHistory /></ProtectedRoute>} />
+        <Route path="/member/profile" element={<ProtectedRoute role="member"><ProfileInformation /></ProtectedRoute>} />
+        <Route path="/member/password-management" element={<ProtectedRoute role="member"><PasswordManagement /></ProtectedRoute>} />
+        <Route path="/member/membership-details" element={<ProtectedRoute role="member"><MembershipDetails /></ProtectedRoute>} />
+        <Route path="/member/professional-development" element={<ProtectedRoute role="member"><ProfessionalDevelopment /></ProtectedRoute>} />
 
         {/* Admin Routes */}
-        <Route
-          path="/admin"
-          element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>}
-        />
-        <Route
-          path="/admin/members/:id"
-          element={<ProtectedRoute role="admin"><MemberDetail /></ProtectedRoute>}
-        />
-        <Route
-          path="/admin/approvals"
-          element={<ProtectedRoute role="admin"><Approvals /></ProtectedRoute>}
-        />
-        <Route
-          path="/admin/payments"
-          element={<ProtectedRoute role="admin"><Payments /></ProtectedRoute>}
-        />
-        <Route
-          path="/admin/reports"
-          element={<ProtectedRoute role="admin"><Reports /></ProtectedRoute>}
-        />
+        <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        <Route path="/admin/members" element={<ProtectedRoute role="admin"><Members /></ProtectedRoute>} />
+        <Route path="/admin/members/:id" element={<ProtectedRoute role="admin"><MemberDetail /></ProtectedRoute>} />
+        <Route path="/admin/approvals" element={<ProtectedRoute role="admin"><Approvals /></ProtectedRoute>} />
+        <Route path="/admin/payments" element={<ProtectedRoute role="admin"><Payments /></ProtectedRoute>} />
+        <Route path="/admin/reports" element={<ProtectedRoute role="admin"><Reports /></ProtectedRoute>} />
+        <Route path="/admin/roles" element={<ProtectedRoute role="admin"><Roles /></ProtectedRoute>} />
+        <Route path="/admin/settings" element={<ProtectedRoute role="admin"><Settings /></ProtectedRoute>} />
       </Routes>
   );
 };
