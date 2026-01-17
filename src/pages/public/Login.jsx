@@ -25,17 +25,22 @@ const Login = () => {
         ? { email: formData.emailOrID, password: formData.password }
         : { membership_id: formData.emailOrID, password: formData.password };
 
+      // Login
       await api.post("/login/", payload, { withCredentials: true });
 
-      // Fetch the user after successful login
+      // Fetch user info
       const { data: userData } = await api.get("/member/info/", {
         withCredentials: true,
       });
 
       setUser(userData);
 
-      if (userData.role === "admin") navigate("/admin");
-      else navigate("/dashboard");
+      // ✅ Redirect based purely on role
+if (userData.role === "admin") {
+  navigate("/admin");
+} else {
+  navigate("/dashboard");
+}
     } catch (err) {
       console.error("Login error:", err.response?.data || err);
       setError("Invalid login credentials. Please try again.");
@@ -110,6 +115,7 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
 

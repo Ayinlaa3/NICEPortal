@@ -1,29 +1,43 @@
+// src/lib/api.js
 import axios from "axios";
 
-const api = axios.create({
+const instance = axios.create({
   baseURL: "https://nicengineers.com/api",
-  withCredentials: true,
+  withCredentials: true, // Always send cookies
 });
 
-export default api;
+export default instance;
 
-// Dashboard Summary
-export const getDashboardSummary = async () => {
-  const res = await api.get("/admin/dashboard-summary/");
-  return res.data;
-};
 
-// Members by Chapter
-export const getChapterData = async () => {
-  const res = await api.get("/admin/members-by-chapter/");
-  return res.data;
-};
 
-// Members by Grade
-export const getGradeData = async () => {
-  const res = await api.get("/admin/members-by-grade/");
-  return res.data;
-};
+
+
+// import axios from "axios";
+
+// const api = axios.create({
+//   baseURL: "https://nicengineers.com/api",
+//   withCredentials: true,
+// });
+
+// export default api;
+
+// // Dashboard Summary
+// export const getDashboardSummary = async () => {
+//   const res = await api.get("/admin/dashboard-summary/");
+//   return res.data;
+// };
+
+// // Members by Chapter
+// export const getChapterData = async () => {
+//   const res = await api.get("/admin/members-by-chapter/");
+//   return res.data;
+// };
+
+// // Members by Grade
+// export const getGradeData = async () => {
+//   const res = await api.get("/admin/members-by-grade/");
+//   return res.data;
+// };
 
 
 // import axios from "axios";

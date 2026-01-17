@@ -5,24 +5,35 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } fro
 import Button from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { RefreshCw, BarChart3 } from "lucide-react";
-import { getDashboardSummary, getChapterData, getGradeData } from "@/lib/api";
+// import { getDashboardSummary, getChapterData, getGradeData } from "@/lib/api"; ❌ Unused APIs
 import Spinner from "@/components/Spinner";
 
 const AdminDashboard = () => {
   const [summary, setSummary] = useState(null);
   const [chartData, setChartData] = useState([]);
-  const [viewMode, setViewMode] = useState("chapter"); // "chapter" or "grade"
+  const [viewMode, setViewMode] = useState("chapter");
   const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
     try {
-      const [summaryRes, chartRes] = await Promise.all([
-        getDashboardSummary(),
-        viewMode === "chapter" ? getChapterData() : getGradeData()
-      ]);
-      setSummary(summaryRes);
-      setChartData(chartRes);
+      // ❌ Disabled since API doesn't exist
+      // const [summaryRes, chartRes] = await Promise.all([
+      //   getDashboardSummary(),
+      //   viewMode === "chapter" ? getChapterData() : getGradeData()
+      // ]);
+      // setSummary(summaryRes);
+      // setChartData(chartRes);
+
+      // ✅ Temporary placeholders
+      setSummary({
+        totalMembers: 0,
+        pendingApprovals: 0,
+        approvedMembers: 0,
+        totalPayments: 0,
+      });
+      setChartData([]); // or mock data if needed
+
     } catch (err) {
       console.error("Error fetching dashboard data:", err);
     } finally {
@@ -111,6 +122,7 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
 
 
 

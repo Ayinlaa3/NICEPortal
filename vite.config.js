@@ -7,13 +7,18 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
-  plugins: [react()], // ✅ Remove tailwindcss() from here
+  plugins: [react()],
+  server: {
+    port: 5173,   // Vite will always use this port now
+    host: true,   // Allows access via LAN IP or 0.0.0.0
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
 });
+
 
 
 

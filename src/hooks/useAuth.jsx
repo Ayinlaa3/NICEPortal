@@ -1,21 +1,25 @@
 // src/hooks/useAuth.jsx
-import { createContext, useState, useEffect, useContext } from "react";
-import axios from "@/lib/api";
+import { createContext, useContext, useEffect, useState } from "react";
+import { checkAuthStatus, logout as apiLogout } from "@/lib/auth";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // Optional loading state
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get("/auth/user/", { withCredentials: true });
+        const res = await checkAuthStatus();
         setUser(res.data);
       } catch (err) {
         setUser(null);
+      } finally {
+        setLoading(false);
       }
     };
+
     fetchUser();
   }, []);
 
@@ -23,15 +27,16 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post("/auth/logout/", {}, { withCredentials: true });
+      await apiLogout();
     } catch (err) {
-      console.error("Logout failed", err);
+      console.error("Logout failed:", err);
+    } finally {
+      setUser(null);
     }
-    setUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

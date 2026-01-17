@@ -1,5 +1,6 @@
 // src/App.jsx
 import { Routes, Route } from "react-router-dom";
+import RoleBasedLayout from "@/components/RoleBasedLayout";
 import Login from "@/pages/public/Login";
 import ForgotPassword from "@/pages/public/ForgotPassword";
 import Signup from "@/pages/public/Signup";
@@ -48,7 +49,101 @@ const App = () => {
         <Route path="/member/professional-development" element={<ProtectedRoute role="member"><ProfessionalDevelopment /></ProtectedRoute>} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
+        {/* Admin Routes */}
+<Route
+  path="/admin"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <AdminDashboard />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/members"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Members />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/members/:id"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <MemberDetail />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/approvals"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Approvals />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/payments"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Payments />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/reports"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Reports />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/roles"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Roles />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/settings"
+  element={
+    <ProtectedRoute role="admin">
+      <RoleBasedLayout>
+        <Settings />
+      </RoleBasedLayout>
+    </ProtectedRoute>
+  }
+/>
+</Routes> 
+        
+  );
+};
+
+export default App;
+        {/* <Route path="/admin" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/members" element={<ProtectedRoute role="admin"><Members /></ProtectedRoute>} />
         <Route path="/admin/members/:id" element={<ProtectedRoute role="admin"><MemberDetail /></ProtectedRoute>} />
         <Route path="/admin/approvals" element={<ProtectedRoute role="admin"><Approvals /></ProtectedRoute>} />
@@ -56,8 +151,4 @@ const App = () => {
         <Route path="/admin/reports" element={<ProtectedRoute role="admin"><Reports /></ProtectedRoute>} />
         <Route path="/admin/roles" element={<ProtectedRoute role="admin"><Roles /></ProtectedRoute>} />
         <Route path="/admin/settings" element={<ProtectedRoute role="admin"><Settings /></ProtectedRoute>} />
-      </Routes>
-  );
-};
-
-export default App;
+      */}

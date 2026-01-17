@@ -4,18 +4,46 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 
 const ProtectedRoute = ({ children, role }) => {
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
-  if (!user) return <Navigate to="/" replace />;
+  if (loading) return <div>Loading...</div>;
 
-  if (role && user.role !== role) {
+  // Not logged in — redirect to login
+  if (!user) {
+    console.warn("🔒 Access denied: No user session found");
     return <Navigate to="/" replace />;
   }
 
+  // Role-protected route — check role
+  if (role && user.role?.toLowerCase() !== role.toLowerCase()) {
+    console.warn(`🔒 Access denied: User role "${user.role}" does not match required "${role}"`);
+    return <Navigate to="/" replace />;
+  }
+
+  // Access granted
   return children;
 };
 
 export default ProtectedRoute;
+
+
+
+// import { Navigate } from "react-router-dom";
+// import { useAuth } from "@/hooks/useAuth";
+
+// const ProtectedRoute = ({ children, role }) => {
+//   const { user } = useAuth();
+
+//   if (!user) return <Navigate to="/" replace />;
+
+//   if (role && user.role !== role) {
+//     return <Navigate to="/" replace />;
+//   }
+
+//   return children;
+// };
+
+// export default ProtectedRoute;
 
 
 
