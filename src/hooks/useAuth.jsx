@@ -1,48 +1,65 @@
-// src/hooks/useAuth.jsx
-import { createContext, useContext, useEffect, useState } from "react";
-import { checkAuthStatus, logout as apiLogout } from "@/lib/auth";
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
 
-const AuthContext = createContext();
-
-export const AuthProvider = ({ children }) => {
+export const useAuth = () => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // Optional loading state
+  const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await checkAuthStatus();
-        setUser(res.data);
-      } catch (err) {
-        setUser(null);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const loadUser = async () => {
+    setLoading(true);
 
-    fetchUser();
-  }, []);
+    const { data: authData } = await supabase.auth.getUser();
 
-  const login = (userData) => setUser(userData);
-
-  const logout = async () => {
-    try {
-      await apiLogout();
-    } catch (err) {
-      console.error("Logout failed:", err);
-    } finally {
+    if (!authData?.user) {
       setUser(null);
+      setLoading(false);
+      return;
     }
+
+    // 🔑 Fetch profile (role lives here)
+    const { data: profile, error } = await supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", authData.user.id)
+      .single();
+
+    if (error) {
+      console.error("Profile fetch error:", error);
+      setUser(null);
+    } else {
+      setUser({
+        ...authData.user,
+        role: profile.role,
+        profile,
+      });
+    }
+
+    setLoading(false);
   };
 
-  return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  useEffect(() => {
+    loadUser();
+
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      loadUser();
+    });
+
+    return () => listener.subscription.unsubscribe();
+  }, []);
+
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
+  return {
+    user,
+    isAuthenticated: !!user,
+    loading,
+    logout,
+  };
 };
 
-export const useAuth = () => useContext(AuthContext);
 
 
 

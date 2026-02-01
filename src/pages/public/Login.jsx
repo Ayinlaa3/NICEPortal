@@ -1,53 +1,43 @@
 import { useState } from "react";
+import { supabase } from "@/lib/supabase";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
-import api from "@/lib/api";
 import Button from "@/components/ui/Button";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { login: setUser } = useAuth();
-  const [formData, setFormData] = useState({ emailOrID: "", password: "" });
+  const { login, role } = useAuth();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) =>
-    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError("");
+  e.preventDefault();
+  setLoading(true);
+  setError("");
 
-    try {
-      const isEmail = formData.emailOrID.includes("@");
-      const payload = isEmail
-        ? { email: formData.emailOrID, password: formData.password }
-        : { membership_id: formData.emailOrID, password: formData.password };
+  const { emailOrID, password } = formData;
 
-      // Login
-      await api.post("/login/", payload, { withCredentials: true });
+  try {
+    const { error } = await supabase.auth.signInWithPassword({
+      email: emailOrID,
+      password,
+    });
 
-      // Fetch user info
-      const { data: userData } = await api.get("/member/info/", {
-        withCredentials: true,
-      });
+    if (error) throw error;
 
-      setUser(userData);
+    // 🔁 useAuth will auto-handle redirect via ProtectedRoute
+    navigate("/dashboard");
 
-      // ✅ Redirect based purely on role
-if (userData.role === "admin") {
-  navigate("/admin");
-} else {
-  navigate("/dashboard");
-}
-    } catch (err) {
-      console.error("Login error:", err.response?.data || err);
-      setError("Invalid login credentials. Please try again.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  } catch (err) {
+    console.error(err);
+    setError("Invalid login credentials.");
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
@@ -56,19 +46,18 @@ if (userData.role === "admin") {
         className="w-full max-w-md p-8 space-y-4 bg-white shadow-md rounded-xl"
       >
         <h2 className="text-2xl font-bold text-center text-[var(--primary)]">
-          Member Login
+          Portal Login
         </h2>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
 
         <div>
-          <label>Email or Membership ID</label>
+          <label>Email</label>
           <input
-            type="text"
-            name="emailOrID"
+            type="email"
             required
-            value={formData.emailOrID}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 mt-1 border rounded-md"
           />
         </div>
@@ -77,37 +66,21 @@ if (userData.role === "admin") {
           <label>Password</label>
           <input
             type="password"
-            name="password"
             required
-            value={formData.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             className="w-full p-2 mt-1 border rounded-md"
           />
-        </div>
-
-        <div className="text-sm text-right">
-          <Link
-            to="/forgot-password"
-            className="text-[var(--primary)] hover:underline"
-          >
-            Forgot password?
-          </Link>
         </div>
 
         <Button className="w-full" type="submit" disabled={loading}>
           {loading ? "Logging in..." : "Login"}
         </Button>
 
-        <div className="mt-2 space-y-1 text-sm text-center text-gray-700">
-          <p>
-            Visiting for the first time?{" "}
-            <Link
-              to="/register"
-              className="text-[var(--primary)] font-medium hover:underline"
-            >
-              Register here
-            </Link>
-          </p>
+        <div className="mt-2 text-sm text-center">
+          <Link to="/register" className="text-[var(--primary)] hover:underline">
+            New here? Register
+          </Link>
         </div>
       </form>
     </div>
